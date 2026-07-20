@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nghiên cứu các thuật toán phân cụm dữ liệu — Nguyễn Minh Hằng</title>
+<title>A Study of Clustering Algorithms — Nguyễn Minh Hằng</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -11,21 +11,20 @@
   <header class="site-header">
     <a class="brand" href="../index.html">Nguyễn Minh Hằng</a>
     <nav class="site-nav">
-      <a href="../index.html">Trang chủ</a>
-      <a href="../thesis/index.html">Luận văn</a>
-      <a href="index.html" class="active">Dự án</a>
-      <span class="lang-switch"><a href="../en/projects/clustering.html">EN</a></span>
+      <a href="../index.html">Home</a>
+      <a href="../thesis/index.html">Thesis</a>
+      <a href="index.html" class="active">Projects</a>
     </nav>
   </header>
 
   <main>
-    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">DỰ ÁN</div>
-    <h1>Nghiên cứu các thuật toán phân cụm dữ liệu và đánh giá thực nghiệm một số bộ dữ liệu</h1>
+    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">PROJECT</div>
+    <h1>A Study of Clustering Algorithms with Experimental Evaluation on Several Datasets</h1>
     <p class="lede">
-      Đánh giá thực nghiệm có hệ thống 8 phương pháp phân cụm tiêu biểu — K-Means,
-      Agglomerative Clustering (Ward, Complete, Average), Gaussian Mixture Model
-      (Full, Tied), Spectral Clustering (RBF) và DBSCAN — trên bốn bộ dữ liệu chuẩn:
-      Iris, Wine, Breast Cancer Wisconsin và Digits.
+      A systematic experimental evaluation of eight representative clustering methods —
+      K-Means, Agglomerative Clustering (Ward, Complete, Average), Gaussian Mixture Model
+      (Full, Tied), Spectral Clustering (RBF), and DBSCAN — across four standard datasets:
+      Iris, Wine, Breast Cancer Wisconsin, and Digits.
     </p>
 
     <div class="tag-row">
@@ -37,49 +36,46 @@
       <span class="tag">PCA / t-SNE / UMAP</span>
     </div>
 
-    <h2>Lời mở đầu</h2>
+    <h2>Introduction</h2>
     <p>
-      Trong thời đại chuyển đổi số, dữ liệu đang trở thành một trong những nguồn tài nguyên
-      quan trọng nhất đối với các tổ chức, doanh nghiệp và hoạt động nghiên cứu khoa học.
-      Sự phát triển mạnh mẽ của các hệ thống thông tin, thiết bị cảm biến và nền tảng số đã
-      tạo ra khối lượng dữ liệu khổng lồ với nhiều dạng thức khác nhau. Tuy nhiên, phần lớn
-      dữ liệu được thu thập trong thực tế không đi kèm nhãn hoặc thông tin phân loại rõ
-      ràng, khiến việc khai thác tri thức từ dữ liệu trở thành một thách thức lớn. Trong bối
-      cảnh đó, các phương pháp học không giám sát (Unsupervised Learning) đóng vai trò
-      quan trọng trong việc khám phá cấu trúc tiềm ẩn của dữ liệu, hỗ trợ quá trình phân
-      tích và ra quyết định dựa trên dữ liệu.
+      In the age of digital transformation, data has become one of the most important resources
+      for organizations, businesses, and scientific research. The rapid growth of information
+      systems, sensors, and digital platforms has produced enormous volumes of data in many
+      different forms. However, most data collected in practice comes without clear labels or
+      classification information, making knowledge extraction a major challenge. In this
+      context, unsupervised learning methods play a key role in uncovering the hidden structure
+      of data and supporting data-driven analysis and decision-making.
     </p>
     <p>
-      Phân cụm dữ liệu (Clustering) là một trong những bài toán nền tảng và phổ biến nhất
-      của học không giám sát. Mục tiêu của phân cụm là nhóm các đối tượng dữ liệu có đặc
-      điểm tương đồng vào cùng một cụm, đồng thời đảm bảo sự khác biệt rõ rệt giữa các
-      cụm khác nhau. Không giống như các bài toán phân loại có giám sát, phân cụm không
-      yêu cầu dữ liệu đầu vào phải được gán nhãn trước.
+      Clustering is one of the most fundamental and widely used problems in unsupervised
+      learning. Its goal is to group data objects with similar characteristics into the same
+      cluster while ensuring clear separation between different clusters. Unlike supervised
+      classification, clustering does not require the input data to be pre-labeled.
     </p>
     <p>
-      Xuất phát từ những yêu cầu đó, báo cáo này tập trung nghiên cứu một cách hệ thống
-      các nền tảng lý thuyết và quy trình thực nghiệm của bài toán phân cụm trên dữ liệu
-      dạng bảng. Nội dung được tổ chức theo một pipeline phân tích dữ liệu hoàn chỉnh, bao
-      gồm các bước tiền xử lý dữ liệu, giảm chiều, xây dựng mô hình phân cụm, trực quan
-      hóa kết quả và đánh giá hiệu năng của các thuật toán. Thông qua việc phân tích và
-      thực nghiệm trên nhiều bộ dữ liệu kinh điển như Iris, Wine, Digits và Breast Cancer,
-      báo cáo nhằm làm rõ nguyên lý hoạt động, đặc điểm và khả năng ứng dụng của từng
-      phương pháp phân cụm trong các bối cảnh dữ liệu khác nhau.
+      Motivated by these needs, this report systematically studies the theoretical foundations
+      and experimental workflow of clustering on tabular data. The content is organized as a
+      complete data-analysis pipeline: preprocessing, dimensionality reduction, model building,
+      result visualization, and performance evaluation. Through experiments on well-known
+      benchmark datasets — Iris, Wine, Digits, and Breast Cancer — the report aims to clarify
+      the mechanics, characteristics, and applicability of each clustering method across
+      different data contexts.
     </p>
 
-    <h2>Thiết kế thực nghiệm</h2>
+    <h2>Experimental Design</h2>
     <p>
-      Nghiên cứu tuân thủ nghiêm ngặt <strong>nguyên tắc không giám sát</strong>: nhãn được niêm phong
-      hoàn toàn trong suốt các bước tiền xử lý, giảm chiều, huấn luyện và lựa chọn siêu tham số,
-      chỉ được mở ra một lần duy nhất tại giai đoạn đánh giá ngoại tại cuối cùng — phản ánh
-      đúng điều kiện triển khai thực tế nơi nhãn thường không có sẵn hoặc cực kỳ tốn kém để
-      thu thập. Số cụm K được chọn theo chiến lược <strong>Silhouette-Optimum</strong>
-      (K* = argmax<sub>K∈{2,...,14}</sub> Sil(K)), sau đó đối chiếu với số nhóm thực K<sub>true</sub>.
+      The study strictly follows the <strong>unsupervised principle</strong>: labels are kept
+      completely sealed throughout preprocessing, dimensionality reduction, training, and
+      hyperparameter selection, and are only revealed once, at the final extrinsic evaluation
+      stage — mirroring real deployment conditions where labels are usually unavailable or
+      prohibitively expensive to collect. The number of clusters K is chosen using the
+      <strong>Silhouette-Optimum</strong> strategy (K* = argmax<sub>K∈{2,...,14}</sub> Sil(K)),
+      then compared against the true number of groups K<sub>true</sub>.
     </p>
 
-    <h2>Tổng kết kết quả tốt nhất trên 4 dataset</h2>
+    <h2>Best Results Summary Across 4 Datasets</h2>
     <table>
-      <thead><tr><th>Dataset</th><th>K<sub>Sil</sub></th><th>K<sub>true</sub></th><th>Khớp?</th><th>Best Method</th><th>Best ARI</th><th>Best ACC</th></tr></thead>
+      <thead><tr><th>Dataset</th><th>K<sub>Sil</sub></th><th>K<sub>true</sub></th><th>Match?</th><th>Best Method</th><th>Best ARI</th><th>Best ACC</th></tr></thead>
       <tbody>
         <tr><td>Iris</td><td>2</td><td>3</td><td>✗</td><td>DBSCAN</td><td>0.631</td><td>0.724</td></tr>
         <tr><td>Wine</td><td>3</td><td>3</td><td>✓</td><td>GMM Tied</td><td>0.946</td><td>0.983</td></tr>
@@ -87,11 +83,11 @@
         <tr><td>Digits</td><td>10</td><td>10</td><td>✓</td><td>Agglo. Ward*</td><td>0.664</td><td>0.745</td></tr>
       </tbody>
     </table>
-    <p style="font-size:0.85rem;color:var(--text-muted)">*DBSCAN đạt ARI=1.0 trên Digits nhưng loại bỏ 96% mẫu là noise — không thực tế để triển khai.</p>
+    <p style="font-size:0.85rem;color:var(--text-muted)">*DBSCAN reaches ARI=1.0 on Digits but discards 96% of samples as noise — not practical for deployment.</p>
 
-    <h3>Ranking ARI trung bình theo phương pháp (không tính DBSCAN-Digits)</h3>
+    <h3>Mean ARI Ranking by Method (excluding DBSCAN-Digits)</h3>
     <table>
-      <thead><tr><th>Phương pháp</th><th>Iris</th><th>Wine</th><th>BC</th><th>Digits</th><th>Mean ARI</th></tr></thead>
+      <thead><tr><th>Method</th><th>Iris</th><th>Wine</th><th>BC</th><th>Digits</th><th>Mean ARI</th></tr></thead>
       <tbody>
         <tr><td>GMM Tied</td><td>#2</td><td>#1</td><td>#2</td><td>#3</td><td>0.687</td></tr>
         <tr><td>KMeans</td><td>#2</td><td>#3</td><td>#3</td><td>#3</td><td>0.664</td></tr>
@@ -104,106 +100,113 @@
       </tbody>
     </table>
 
-    <h2>Kết luận</h2>
+    <h2>Conclusion</h2>
     <p>
-      Nghiên cứu này trình bày một đánh giá thực nghiệm có hệ thống về tám phương pháp phân
-      cụm tiêu biểu — K-Means, Agglomerative Clustering (Ward, Complete, Average), Gaussian
-      Mixture Model (Full, Tied), Spectral Clustering (RBF) và DBSCAN — trên bốn bộ dữ liệu
-      chuẩn được sử dụng rộng rãi trong cộng đồng học máy: Iris, Wine, Breast Cancer Wisconsin
-      và Digits. Toàn bộ quy trình được thiết kế theo một pipeline bảy bước thống nhất, tuân thủ
-      nghiêm ngặt nguyên tắc không giám sát... Cách tiếp cận này đảm bảo tính khách quan và
-      khả năng so sánh công bằng giữa các phương pháp, đồng thời phản ánh điều kiện triển khai
-      thực tế — nơi nhãn thường không có sẵn hoặc cực kỳ tốn kém để thu thập.
+      This study presents a systematic experimental evaluation of eight representative
+      clustering methods — K-Means, Agglomerative Clustering (Ward, Complete, Average),
+      Gaussian Mixture Model (Full, Tied), Spectral Clustering (RBF), and DBSCAN — across
+      four benchmark datasets widely used in the machine learning community: Iris, Wine,
+      Breast Cancer Wisconsin, and Digits. The entire workflow follows a unified seven-step
+      pipeline, strictly observing the unsupervised principle. This approach ensures objectivity
+      and a fair comparison across methods, while reflecting real deployment conditions where
+      labels are usually unavailable or prohibitively expensive to collect.
     </p>
 
-    <h3>Độ chính xác của Silhouette-Optimum trong lựa chọn K</h3>
+    <h3>Accuracy of Silhouette-Optimum in Selecting K</h3>
     <p>
-      Kết quả cho thấy phương pháp này đạt <strong>độ chính xác 75%</strong>: K*<sub>Sil</sub> = K<sub>true</sub>
-      trên Wine (K=3), Breast Cancer (K=2) và Digits (K=10), và cho kết quả sai lệch duy nhất
-      trên Iris (K*<sub>Sil</sub>=2 so với K<sub>true</sub>=3). Đáng chú ý nhất là Digits: với không gian
-      64 chiều và 10 lớp mục tiêu, Silhouette-Optimum vẫn phục hồi chính xác K*=10 — kết quả
-      không hiển nhiên vì lời nguyền chiều thường làm phẳng cấu trúc khoảng cách trong không
-      gian cao chiều. Trường hợp Iris không phải là một lỗi phương pháp: dữ liệu Iris được biết
-      đến rộng rãi trong văn liệu về sự chồng lấn đáng kể giữa hai loài Iris versicolor và
-      Iris virginica, nên Silhouette-Optimum đang phản ánh trung thực cấu trúc hình học của
-      dữ liệu chứ không phải mắc lỗi.
+      The results show this method achieves <strong>75% accuracy</strong>: K*<sub>Sil</sub> =
+      K<sub>true</sub> on Wine (K=3), Breast Cancer (K=2), and Digits (K=10), with a single
+      mismatch on Iris (K*<sub>Sil</sub>=2 vs. K<sub>true</sub>=3). The most notable case is
+      Digits: in a 64-dimensional space with 10 target classes, Silhouette-Optimum still
+      correctly recovers K*=10 — a non-trivial result, since the curse of dimensionality
+      typically flattens distance structure in high-dimensional spaces. The Iris case is not a
+      methodological failure: Iris is widely documented in the literature for the significant
+      overlap between the Iris versicolor and Iris virginica species, so Silhouette-Optimum is
+      faithfully reflecting the data's geometric structure rather than making an error.
     </p>
 
-    <h3>Sự phá vỡ tương quan giữa đánh giá nội tại và ngoại tại</h3>
+    <h3>The Breakdown Between Intrinsic and Extrinsic Evaluation</h3>
     <p>
-      Phát hiện trung tâm và có hàm ý phương pháp luận quan trọng nhất của nghiên cứu này là
-      mối tương quan giữa Silhouette Score và Adjusted Rand Index không phải là hằng số mà biến
-      động mạnh theo đặc tính hình học của từng bộ dữ liệu, bao gồm cả trường hợp tương quan
-      âm mạnh — tức là chỉ số nội tại xếp hạng các thuật toán theo chiều ngược lại với chất lượng
-      thực sự.
+      The central and most methodologically significant finding of this study is that the
+      correlation between the Silhouette Score and the Adjusted Rand Index is not constant —
+      it varies sharply with each dataset's geometric properties, including cases of strong
+      negative correlation, where the intrinsic metric ranks algorithms in the <em>opposite</em>
+      direction from their true quality.
     </p>
     <table>
-      <thead><tr><th>Dataset</th><th>ρ(Sil, ARI)</th><th>Best<sub>Sil</sub> = Best<sub>ARI</sub>?</th><th>Nhận xét</th></tr></thead>
+      <thead><tr><th>Dataset</th><th>ρ(Sil, ARI)</th><th>Best<sub>Sil</sub> = Best<sub>ARI</sub>?</th><th>Remark</th></tr></thead>
       <tbody>
-        <tr><td>Iris</td><td>+0.992</td><td>✓ (DBSCAN)</td><td>Tương quan rất cao, chỉ số đáng tin cậy</td></tr>
-        <tr><td>Wine</td><td>+0.757</td><td>✗ (Sil: DBSCAN / ARI: GMM Tied)</td><td>Tương quan khá, sai lệch nhỏ</td></tr>
-        <tr><td>Breast Cancer</td><td>−0.928</td><td>✗ (ngược hoàn toàn!)</td><td>Nguy hiểm — chỉ số misleading</td></tr>
-        <tr><td>Digits</td><td>−0.228</td><td>✗ (gần như độc lập)</td><td>Không tương quan trong bài toán 10-class</td></tr>
+        <tr><td>Iris</td><td>+0.992</td><td>✓ (DBSCAN)</td><td>Very high correlation, the metric is reliable</td></tr>
+        <tr><td>Wine</td><td>+0.757</td><td>✗ (Sil: DBSCAN / ARI: GMM Tied)</td><td>Fairly good correlation, minor discrepancy</td></tr>
+        <tr><td>Breast Cancer</td><td>−0.928</td><td>✗ (completely reversed!)</td><td>Dangerous — the metric is misleading</td></tr>
+        <tr><td>Digits</td><td>−0.228</td><td>✗ (almost independent)</td><td>No correlation in this 10-class problem</td></tr>
       </tbody>
     </table>
     <p>
-      Trường hợp nghiêm trọng nhất là Breast Cancer (ρ=−0.928): Agglomerative Complete và
-      Spectral RBF đạt Silhouette cao nhất (0.661) nhưng ARI ≈ 0 — hai phương pháp này tìm
-      được các cụm hình học compact, nhỏ gọn, nhưng hoàn toàn không tương ứng với ranh giới
-      lâm sàng giữa tế bào ác tính và lành tính. Kết quả này có hàm ý phương pháp luận nghiêm
-      trọng: trong các bài toán có ngữ nghĩa ứng dụng rõ ràng — y tế, sinh học phân tử, tài
-      chính, phân khúc khách hàng — việc sử dụng Silhouette Score như chỉ số lựa chọn mô hình
-      duy nhất <strong>có thể dẫn đến lựa chọn thuật toán sai và hậu quả ứng dụng nghiêm trọng</strong>.
+      The most severe case is Breast Cancer (ρ=−0.928): Agglomerative Complete and Spectral RBF
+      achieve the highest Silhouette scores (0.661) but ARI ≈ 0 — these two methods find compact,
+      tight clusters that do not correspond at all to the clinical boundary between malignant and
+      benign cells. This result carries a serious methodological implication: in problems with a
+      clear applied semantic — healthcare, molecular biology, finance, customer segmentation —
+      using the Silhouette Score as the sole model-selection metric
+      <strong>can lead to choosing the wrong algorithm, with serious real-world consequences</strong>.
     </p>
 
-    <h3>Hiệu suất so sánh giữa các họ thuật toán</h3>
+    <h3>Performance Comparison Across Algorithm Families</h3>
     <ul>
-      <li><strong>K-Means</strong>: hiệu suất ổn định và đồng đều (ARI 0.534–0.898), thời gian tính toán
-      thấp nhất; giả định hình cầu không phải hạn chế nghiêm trọng khi dữ liệu có cấu trúc tương thích.</li>
-      <li><strong>Agglomerative Ward</strong>: nổi bật nhất trong không gian cao chiều — trên Digits (64D)
-      đạt ARI=0.664, vượt trội K-Means, GMM Full và Spectral RBF, dù có Silhouette thấp nhất.</li>
-      <li><strong>Agglomerative Complete/Average</strong>: thất bại có hệ thống trên dữ liệu nhiều chiều
-      (ARI≈0 trên Digits) do hiện tượng chaining effect.</li>
-      <li><strong>GMM Tied</strong> đạt ARI cao nhất trên Wine (0.946, chỉ sai 3/178 mẫu) và mean ARI
-      cao nhất tổng hợp — ràng buộc tied covariance hoạt động như regularization hiệu quả.</li>
-      <li><strong>DBSCAN</strong>: hành vi nhị phân rõ nét theo số chiều — tốt trên Iris/Wine (chiều thấp,
-      có outlier) nhưng trên Wine phải loại 65.7% mẫu làm noise để đạt ARI cao; trên Digits
-      loại tới 96.3% mẫu, khiến kết quả ARI=1.0 chỉ là artefact thống kê.</li>
-      <li><strong>Spectral RBF</strong>: không đạt hiệu suất cạnh tranh trên bất kỳ dataset nào (ARI trung
-      bình 0.255), nhân RBF với bandwidth cố định không đủ linh hoạt trong không gian nhiều chiều.</li>
+      <li><strong>K-Means</strong>: stable, consistent performance (ARI 0.534–0.898), the fastest
+      compute time; its spherical-cluster assumption is not a serious limitation when the data's
+      structure fits.</li>
+      <li><strong>Agglomerative Ward</strong>: stands out most in high-dimensional space — on
+      Digits (64D) it reaches ARI=0.664, clearly outperforming K-Means, GMM Full, and Spectral
+      RBF, despite having the lowest Silhouette score.</li>
+      <li><strong>Agglomerative Complete/Average</strong>: fail systematically on
+      high-dimensional data (ARI≈0 on Digits) due to the chaining effect.</li>
+      <li><strong>GMM Tied</strong> achieves the highest ARI on Wine (0.946, only 3/178 samples
+      misclassified) and the highest overall mean ARI — the tied covariance constraint acts as
+      effective regularization.</li>
+      <li><strong>DBSCAN</strong>: shows sharply binary behavior depending on dimensionality —
+      strong on Iris/Wine (low dimensionality, with outliers) but on Wine it must discard 65.7%
+      of samples as noise to reach a high ARI; on Digits it discards up to 96.3% of samples,
+      making the ARI=1.0 result nothing more than a statistical artifact.</li>
+      <li><strong>Spectral RBF</strong>: never achieves competitive performance on any dataset
+      (mean ARI 0.255) — the RBF kernel with a fixed bandwidth isn't flexible enough in
+      high-dimensional spaces.</li>
     </ul>
 
-    <h3>Khuyến nghị thực hành</h3>
+    <h3>Practical Recommendations</h3>
     <ol>
-      <li><strong>Chiến lược đa thuật toán là bắt buộc, không phải tùy chọn.</strong> Khoảng biến động
-      ARI giữa các phương pháp trên cùng một dataset có thể lên đến 0.95 điểm (Wine: từ −0.005
-      đến 0.946) — hệ quả trực tiếp của No Free Lunch Theorem.</li>
-      <li><strong>Không sử dụng Silhouette Score như chỉ số lựa chọn mô hình độc lập.</strong> Nên dùng
-      đồng thời cả ba chỉ số nội tại (Silhouette, Davies–Bouldin, Calinski–Harabász) và chỉ tin
-      tưởng kết luận khi cả ba đồng thuận; khi có nhãn tham chiếu, ưu tiên ARI.</li>
-      <li><strong>Điều chỉnh lựa chọn thuật toán theo số chiều dữ liệu.</strong> Chiều thấp: K-Means/GMM
-      là lựa chọn đầu tiên. Chiều trung bình: PCA giảm chiều về 95% phương sai trước khi thử
-      K-Means/GMM Tied. Chiều cao: ưu tiên Agglomerative Ward hoặc GMM Tied sau PCA; tránh
-      Complete/Average và DBSCAN.</li>
-      <li><strong>Diễn giải K*<sub>Sil</sub> ≠ K<sub>true</sub> như tín hiệu phân tích</strong>, không phải lỗi
-      phương pháp — nên phân tích cấu trúc chồng lấn qua PCA/UMAP thay vì áp đặt K=K<sub>true</sub>
-      một cách cơ học.</li>
-      <li><strong>Triển khai DBSCAN đòi hỏi kiểm soát tỷ lệ noise nghiêm ngặt</strong> — nếu vượt 20%
-      thì DBSCAN không phù hợp với dataset đó.</li>
-      <li><strong>Ưu tiên GMM Tied như lựa chọn mặc định trong họ mô hình xác suất</strong>, nhờ ràng buộc
-      tied covariance ngăn overfitting trên dữ liệu vừa và nhỏ.</li>
+      <li><strong>A multi-algorithm strategy is mandatory, not optional.</strong> ARI can swing
+      by up to 0.95 points between methods on the same dataset (Wine: from −0.005 to 0.946) —
+      a direct consequence of the No Free Lunch Theorem.</li>
+      <li><strong>Don't use the Silhouette Score as a standalone model-selection metric.</strong>
+      Use all three intrinsic metrics together (Silhouette, Davies–Bouldin, Calinski–Harabász)
+      and only trust a conclusion when all three agree; when reference labels are available,
+      prioritize ARI.</li>
+      <li><strong>Adapt algorithm choice to data dimensionality.</strong> Low dimensionality:
+      K-Means/GMM are the first choice. Medium dimensionality: reduce with PCA to 95% explained
+      variance before trying K-Means/GMM Tied. High dimensionality: prefer Agglomerative Ward or
+      GMM Tied after PCA; avoid Complete/Average and DBSCAN.</li>
+      <li><strong>Read K*<sub>Sil</sub> ≠ K<sub>true</sub> as an analytical signal</strong>, not a
+      methodological error — investigate overlapping structure via PCA/UMAP rather than
+      mechanically forcing K=K<sub>true</sub>.</li>
+      <li><strong>Deploying DBSCAN requires strict noise-ratio control</strong> — if it exceeds
+      20%, DBSCAN is not a good fit for that dataset.</li>
+      <li><strong>Prefer GMM Tied as the default choice among probabilistic models</strong>,
+      thanks to the tied covariance constraint that prevents overfitting on small-to-medium
+      datasets.</li>
     </ol>
 
-    <h3>Hạn chế và hướng nghiên cứu tiếp theo</h3>
+    <h3>Limitations &amp; Future Work</h3>
     <p>
-      Phạm vi thực nghiệm giới hạn ở dữ liệu dạng bảng quy mô vừa và nhỏ (150–1797 mẫu); không
-      gian tìm kiếm siêu tham số (đặc biệt của DBSCAN và Spectral RBF) chưa được khám phá đầy
-      đủ; và nghiên cứu chỉ xét phân cụm trên đặc trưng thô (sau chuẩn hóa/PCA) mà chưa khám
-      phá các biểu diễn học được. Bốn hướng nghiên cứu tiếp theo được đề xuất: (1) mở rộng sang
-      deep clustering (DEC, IDEC); (2) đánh giá trên benchmark quy mô lớn hơn (STL-10, CIFAR-10,
-      MIMIC-III); (3) khám phá semi-supervised clustering với ràng buộc must-link/cannot-link;
-      (4) xây dựng framework meta-learning để tự động hóa lựa chọn thuật toán dựa trên
-      meta-features của dữ liệu đầu vào.
+      The experimental scope is limited to small-to-medium tabular datasets (150–1,797 samples);
+      the hyperparameter search space (particularly for DBSCAN and Spectral RBF) was not fully
+      explored; and the study only considers clustering on raw features (after scaling/PCA)
+      without exploring learned representations. Four directions for future research are
+      proposed: (1) extending to modern deep clustering methods (DEC, IDEC); (2) evaluating on
+      larger-scale benchmarks (STL-10, CIFAR-10, MIMIC-III); (3) exploring semi-supervised
+      clustering with must-link/cannot-link constraints; (4) building a meta-learning framework
+      to automate algorithm selection based on the input data's meta-features.
     </p>
   </main>
 

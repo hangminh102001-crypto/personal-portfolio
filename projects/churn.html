@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dự đoán khách hàng rời bỏ ngành Viễn thông — Nguyễn Minh Hằng</title>
+<title>Telecom Customer Churn Prediction — Nguyễn Minh Hằng</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -11,19 +11,18 @@
   <header class="site-header">
     <a class="brand" href="../index.html">Nguyễn Minh Hằng</a>
     <nav class="site-nav">
-      <a href="../index.html">Trang chủ</a>
-      <a href="../thesis/index.html">Luận văn</a>
-      <a href="index.html" class="active">Dự án</a>
-      <span class="lang-switch"><a href="../en/projects/churn.html">EN</a></span>
+      <a href="../index.html">Home</a>
+      <a href="../thesis/index.html">Thesis</a>
+      <a href="index.html" class="active">Projects</a>
     </nav>
   </header>
 
   <main>
-    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">DỰ ÁN</div>
-    <h1>Dự đoán khách hàng rời bỏ ngành Viễn thông</h1>
+    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">PROJECT</div>
+    <h1>Telecom Customer Churn Prediction</h1>
     <p class="lede">
-      Framework Lai XGBoost + SMOTE-ENN: giải pháp tổng thể kết hợp preprocessing,
-      resampling và ensemble learning để tối ưu hóa dự đoán customer churn.
+      A Hybrid XGBoost + SMOTE-ENN Framework: an end-to-end solution combining preprocessing,
+      resampling, and ensemble learning to optimize customer churn prediction.
     </p>
 
     <div class="tag-row">
@@ -34,111 +33,116 @@
       <span class="tag">Telecom Analytics</span>
     </div>
 
-    <h2>Bối cảnh</h2>
+    <h2>Background</h2>
     <ul>
-      <li><strong>Khách hàng là tài sản quan trọng</strong> — trong ngành viễn thông, khách hàng là
-      tài sản chiến lược và cốt lõi quyết định sự thành công của doanh nghiệp.</li>
-      <li><strong>Churn gây thất thoát lớn</strong> — khách hàng rời bỏ gây thất thoát doanh thu và
-      ảnh hưởng trực tiếp đến lợi nhuận, đòi hỏi phải có chiến lược dự đoán sớm.</li>
-      <li><strong>ML trở thành công cụ chính</strong> — học máy đã trở thành công cụ hiệu quả để phân
-      tích hành vi và dự đoán khả năng rời bỏ của khách hàng.</li>
+      <li><strong>Customers are a critical asset</strong> — in the telecom industry, customers
+      are the strategic, core asset that determines a company's success.</li>
+      <li><strong>Churn causes major losses</strong> — customers leaving causes revenue loss and
+      directly hurts profit, making an early-prediction strategy essential.</li>
+      <li><strong>ML has become the go-to tool</strong> — machine learning has become an
+      effective tool for analyzing behavior and predicting customer churn.</li>
     </ul>
     <div class="tag-row">
-      <span class="tag">5–6x chi phí thu hút KH mới so với giữ chân KH hiện tại</span>
-      <span class="tag">68% khách hàng rời bỏ vì cảm thấy công ty không quan tâm đến họ</span>
+      <span class="tag">5–6x the cost to acquire a new customer vs. retaining an existing one</span>
+      <span class="tag">68% of customers leave because they feel the company doesn't care about them</span>
     </div>
     <p>
-      Giảm tỷ lệ churn 5% có thể tăng lợi nhuận từ 25–95% tùy ngành (nghiên cứu của Bain &amp; Company).
-      Dự đoán churn sớm giúp doanh nghiệp có "thời gian vàng" để thực hiện các biện pháp giữ
-      chân hiệu quả trước khi khách hàng quyết định rời bỏ.
+      Reducing churn by 5% can increase profit by 25–95% depending on the industry (Bain &amp;
+      Company research). Early churn prediction gives a business a "golden window" to take
+      effective retention action before a customer decides to leave.
     </p>
 
-    <h2>Khoảng trống nghiên cứu (Research Gap)</h2>
+    <h2>Research Gap</h2>
     <ul>
-      <li><strong>Tiền xử lý dữ liệu</strong> — nhiều nghiên cứu tập trung vào thuật toán ML nhưng thiếu
-      chú trọng đến tiền xử lý dữ liệu, yếu tố quan trọng ảnh hưởng đến hiệu suất mô hình.</li>
-      <li><strong>Dữ liệu mất cân bằng</strong> — ít nghiên cứu giải quyết triệt để vấn đề dữ liệu mất
-      cân bằng trong dự đoán churn, dẫn đến kết quả không chính xác cho lớp thiểu số.</li>
-      <li><strong>Kết hợp đa kỹ thuật</strong> — các nghiên cứu hiện tại ít tập trung vào kết hợp đa kỹ
-      thuật (hybrid approaches) để tối ưu hóa hiệu suất dự đoán churn.</li>
-      <li><strong>XGBoost + Hybrid Resampling</strong> — ít nghiên cứu kết hợp XGBoost với kỹ thuật
-      resampling lai như SMOTE-ENN để giải quyết vấn đề mất cân bằng dữ liệu.</li>
-      <li><strong>Framework tổng hợp</strong> — chưa có framework tổng hợp đồng thời cả ba yếu tố: data
-      preprocessing, ensemble learning, và resampling trong một giải pháp hoàn chỉnh.</li>
+      <li><strong>Data preprocessing</strong> — many studies focus on the ML algorithm but pay
+      too little attention to data preprocessing, a factor that significantly affects model
+      performance.</li>
+      <li><strong>Imbalanced data</strong> — few studies thoroughly address class imbalance in
+      churn prediction, leading to inaccurate results for the minority class.</li>
+      <li><strong>Combining multiple techniques</strong> — current research rarely focuses on
+      hybrid approaches to optimize churn prediction performance.</li>
+      <li><strong>XGBoost + hybrid resampling</strong> — few studies combine XGBoost with a
+      hybrid resampling technique like SMOTE-ENN to address class imbalance.</li>
+      <li><strong>An integrated framework</strong> — no existing framework integrates all three
+      factors — data preprocessing, ensemble learning, and resampling — into one complete
+      solution.</li>
     </ul>
 
-    <h2>Mục tiêu nghiên cứu</h2>
+    <h2>Research Objectives</h2>
     <ul>
-      <li>Xây dựng Hybrid Framework kết hợp preprocessing + SMOTE-ENN + XGBoost nhằm cải thiện
-      độ chính xác dự đoán churn và giảm misclassification.</li>
-      <li>So sánh hiệu suất mô hình trước và sau khi cân bằng dữ liệu bằng kỹ thuật hybrid resampling.</li>
-      <li>Phân tích trade-off giữa tốc độ xử lý và độ chính xác dự đoán.</li>
-      <li>Sử dụng XGBoost để xác định các đặc trưng quan trọng ảnh hưởng đến quyết định rời bỏ
-      của khách hàng trong ngành viễn thông.</li>
-      <li>So sánh hiệu suất của framework đề xuất so với các nghiên cứu trước đây trên cùng dataset.</li>
+      <li>Build a hybrid framework combining preprocessing + SMOTE-ENN + XGBoost to improve
+      churn prediction accuracy and reduce misclassification.</li>
+      <li>Compare model performance before and after class balancing with hybrid resampling.</li>
+      <li>Analyze the trade-off between processing speed and prediction accuracy.</li>
+      <li>Use XGBoost to identify the key features driving customer churn decisions in the
+      telecom industry.</li>
+      <li>Compare the proposed framework's performance against prior studies on the same
+      datasets.</li>
     </ul>
 
-    <h2>Framework lai — 3 tầng</h2>
+    <h2>Hybrid Framework — 3 Layers</h2>
     <table>
-      <thead><tr><th>Tầng</th><th>Nội dung</th></tr></thead>
+      <thead><tr><th>Layer</th><th>Details</th></tr></thead>
       <tbody>
-        <tr><td><strong>1. Data Layer</strong><br>Tiền xử lý &amp; chuẩn bị dữ liệu</td>
-        <td>Làm sạch dữ liệu → EDA → Feature engineering → Feature selection (Univariate) → Chuẩn hóa (StandardScaler)</td></tr>
-        <tr><td><strong>2. Algorithm Layer</strong><br>Xử lý mất cân bằng &amp; xây dựng mô hình</td>
-        <td>SMOTE-ENN hybrid resampling → Stratified k-fold (k=10) → Mô hình chính XGBoost → Chọn hyperparameters</td></tr>
-        <tr><td><strong>3. Evaluation Layer</strong><br>Đánh giá hiệu suất mô hình</td>
+        <tr><td><strong>1. Data Layer</strong><br>Preprocessing &amp; data preparation</td>
+        <td>Data cleaning → EDA → Feature engineering → Feature selection (Univariate) → Scaling (StandardScaler)</td></tr>
+        <tr><td><strong>2. Algorithm Layer</strong><br>Handling imbalance &amp; model building</td>
+        <td>SMOTE-ENN hybrid resampling → Stratified k-fold (k=10) → XGBoost as the main model → Hyperparameter selection</td></tr>
+        <tr><td><strong>3. Evaluation Layer</strong><br>Model performance evaluation</td>
         <td>Accuracy, Precision, Recall, F1-score, ROC-AUC</td></tr>
       </tbody>
     </table>
     <p>
-      SMOTE tạo mẫu tổng hợp cho lớp thiểu số, ENN loại bỏ nhiễu và mẫu sai — Hybrid kết hợp
-      tối ưu cả hai. Dữ liệu được chia train:test = 70:30, sử dụng Stratified k-fold (k=10)
-      cho cross-validation. XGBoost được chọn làm mô hình chính vì xử lý rất tốt dữ liệu mất
-      cân bằng, khai thác tốt dữ liệu dạng bảng với đặc trưng phi tuyến, và cho giải thích mô
-      hình rõ ràng thông qua feature importance.
+      SMOTE generates synthetic samples for the minority class, ENN removes noisy and
+      mislabeled samples — the hybrid combines the strengths of both. Data is split
+      train:test = 70:30, using stratified k-fold (k=10) cross-validation. XGBoost was chosen
+      as the main model because it handles imbalanced data very well, works well with tabular
+      data containing non-linear features, and provides clear model interpretability through
+      feature importance.
     </p>
 
-    <h2>Thiết lập thực nghiệm</h2>
-    <p>Nghiên cứu thực hiện 2 nhóm thí nghiệm để đánh giá hiệu quả của kỹ thuật resampling:</p>
+    <h2>Experimental Setup</h2>
+    <p>The study runs 2 experiment groups to evaluate the effectiveness of the resampling technique:</p>
     <ul>
-      <li><strong>Thí nghiệm (a)</strong>: XGBoost + SMOTE-ENN + StandardScaler</li>
-      <li><strong>Thí nghiệm (b)</strong>: XGBoost + StandardScaler (không resampling)</li>
+      <li><strong>Experiment (a)</strong>: XGBoost + SMOTE-ENN + StandardScaler</li>
+      <li><strong>Experiment (b)</strong>: XGBoost + StandardScaler (no resampling)</li>
     </ul>
-    <p>Tham số XGBoost: <code>max_depth=5</code>, <code>gamma=1</code>, <code>n_estimators=100</code>, <code>n_jobs=56</code>.</p>
+    <p>XGBoost parameters: <code>max_depth=5</code>, <code>gamma=1</code>, <code>n_estimators=100</code>, <code>n_jobs=56</code>.</p>
 
-    <h2>Dataset</h2>
+    <h2>Datasets</h2>
     <table>
-      <thead><tr><th>Dataset</th><th>Mô tả</th><th>Số bản ghi</th><th>Tỷ lệ churn</th><th>Số thuộc tính</th></tr></thead>
+      <thead><tr><th>Dataset</th><th>Description</th><th>Records</th><th>Churn rate</th><th>Features</th></tr></thead>
       <tbody>
-        <tr><td>IBM Telco</td><td>Công ty viễn thông giả định ở California, Q3</td><td>7,043</td><td>26.53%</td><td>21</td></tr>
-        <tr><td>Orange Telecom</td><td>Nhà mạng Orange, thông tin chi tiết sử dụng dịch vụ</td><td>3,333</td><td>14.49%</td><td>20</td></tr>
-        <tr><td>Iranian Dataset</td><td>Nhà mạng Iran, đặc trưng sử dụng dịch vụ viễn thông</td><td>3,150</td><td>15.71%</td><td>16</td></tr>
+        <tr><td>IBM Telco</td><td>A fictional telecom company in California, Q3</td><td>7,043</td><td>26.53%</td><td>21</td></tr>
+        <tr><td>Orange Telecom</td><td>Orange carrier, detailed service-usage information</td><td>3,333</td><td>14.49%</td><td>20</td></tr>
+        <tr><td>Iranian Dataset</td><td>An Iranian carrier, telecom service-usage features</td><td>3,150</td><td>15.71%</td><td>16</td></tr>
       </tbody>
     </table>
 
-    <h2>Kết quả chính</h2>
+    <h2>Key Results</h2>
     <table>
-      <thead><tr><th>Chỉ số</th><th>Thí nghiệm</th><th>IBM Telco</th><th>Orange</th><th>Iranian</th></tr></thead>
+      <thead><tr><th>Metric</th><th>Experiment</th><th>IBM Telco</th><th>Orange</th><th>Iranian</th></tr></thead>
       <tbody>
         <tr><td rowspan="2">Accuracy</td><td>(a) SMOTE-ENN</td><td>73%</td><td>91%</td><td>99%</td></tr>
-        <tr><td>(b) không resampling</td><td>72%</td><td>95%</td><td>95%</td></tr>
+        <tr><td>(b) no resampling</td><td>72%</td><td>95%</td><td>95%</td></tr>
         <tr><td rowspan="2">Recall</td><td>(a) SMOTE-ENN</td><td>83%</td><td>83%</td><td>99%</td></tr>
-        <tr><td>(b) không resampling</td><td>76%</td><td>76%</td><td>86%</td></tr>
+        <tr><td>(b) no resampling</td><td>76%</td><td>76%</td><td>86%</td></tr>
         <tr><td rowspan="2">Precision</td><td>(a) SMOTE-ENN</td><td>51%</td><td>95%</td><td>98%</td></tr>
-        <tr><td>(b) không resampling</td><td>64%</td><td>94%</td><td>89%</td></tr>
+        <tr><td>(b) no resampling</td><td>64%</td><td>94%</td><td>89%</td></tr>
         <tr><td rowspan="2">F1-score</td><td>(a) SMOTE-ENN</td><td>62%</td><td>95%</td><td>99%</td></tr>
-        <tr><td>(b) không resampling</td><td>59%</td><td>97%</td><td>98%</td></tr>
+        <tr><td>(b) no resampling</td><td>59%</td><td>97%</td><td>98%</td></tr>
         <tr><td>AUC</td><td>(a) SMOTE-ENN</td><td>84%</td><td>88%</td><td>96%</td></tr>
       </tbody>
     </table>
     <p>
-      AUC càng gần 1, mô hình càng có khả năng phân biệt tốt giữa hai lớp — các giá trị AUC
-      cao (84–96%) chứng minh framework đề xuất có khả năng phân loại tốt trên cả 3 bộ dữ liệu.
+      The closer AUC is to 1, the better the model distinguishes between the two classes —
+      the high AUC values (84–96%) demonstrate that the proposed framework classifies well
+      across all 3 datasets.
     </p>
 
-    <h3>Feature quan trọng nhất theo từng dataset (XGBoost feature importance)</h3>
+    <h3>Top Feature per Dataset (XGBoost Feature Importance)</h3>
     <table>
-      <thead><tr><th>Dataset</th><th>Đặc trưng quan trọng nhất</th></tr></thead>
+      <thead><tr><th>Dataset</th><th>Most important features</th></tr></thead>
       <tbody>
         <tr><td>IBM Telco</td><td>Contract Month-to-month, Internet service, Online security</td></tr>
         <tr><td>Orange Telecom</td><td>International plan, VoiceMail, Customer service calls</td></tr>
@@ -146,20 +150,22 @@
       </tbody>
     </table>
 
-    <h2>Hướng nghiên cứu tiếp theo</h2>
-    <h3>Time-based Churn Prediction — Mở rộng mô hình sang chuỗi thời gian</h3>
+    <h2>Future Work</h2>
+    <h3>Time-Based Churn Prediction — Extending the Model to Time Series</h3>
     <ul>
-      <li>Mô hình hiện tại chỉ xem xét dữ liệu tĩnh tại một thời điểm, trong khi hành vi khách
-      hàng thay đổi theo thời gian.</li>
-      <li>Mở rộng sang time-series hoặc sequence modeling — công nghệ tiềm năng: survival analysis, LSTM, Transformer.</li>
-      <li>Dự đoán rủi ro rời bỏ theo từng mốc thời gian, phản ánh đúng chu kỳ hành vi của khách hàng.</li>
+      <li>The current model only considers static data at a single point in time, whereas
+      customer behavior changes over time.</li>
+      <li>Extend to time-series or sequence modeling — promising technologies: survival
+      analysis, LSTM, Transformer.</li>
+      <li>Predict churn risk at each point in time, better reflecting the customer's true
+      behavioral cycle.</li>
     </ul>
-    <h3>Realtime Monitoring &amp; Early Warning — Hệ thống cảnh báo sớm</h3>
+    <h3>Realtime Monitoring &amp; Early Warning</h3>
     <ul>
-      <li>Hệ thống giám sát thời gian thực, tự động cập nhật dữ liệu mới phát sinh.</li>
-      <li>Tính toán lại xác suất churn theo chu kỳ ngắn (hàng giờ/hàng ngày).</li>
-      <li>Phát hiện sớm các tín hiệu bất thường, đưa ra cảnh báo rủi ro kịp thời và kích hoạt
-      chiến dịch retention ngay khi dấu hiệu churn xuất hiện.</li>
+      <li>A real-time monitoring system that automatically ingests newly generated data.</li>
+      <li>Recompute churn probability on a short cycle (hourly/daily).</li>
+      <li>Detect early warning signals, raise timely risk alerts, and trigger a retention
+      campaign as soon as churn indicators appear.</li>
     </ul>
   </main>
 

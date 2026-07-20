@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luận văn — Phát hiện gian lận kế toán bằng Deep Autoencoder</title>
-<meta name="description" content="Luận văn thạc sĩ: Ứng dụng các kỹ thuật học máy để phát hiện gian lận trong dữ liệu kế toán - tài chính, tuân thủ chuẩn mực kiểm toán Việt Nam.">
+<title>Thesis — Accounting Fraud Detection with a Deep Autoencoder</title>
+<meta name="description" content="Master's thesis: applying machine learning techniques to detect fraud in accounting and financial data, compliant with Vietnamese auditing standards.">
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -12,21 +12,20 @@
   <header class="site-header">
     <a class="brand" href="../index.html">Nguyễn Minh Hằng</a>
     <nav class="site-nav">
-      <a href="../index.html">Trang chủ</a>
-      <a href="index.html" class="active">Luận văn</a>
-      <a href="../projects/index.html">Dự án</a>
-      <span class="lang-switch"><a href="../en/thesis/index.html">EN</a></span>
+      <a href="../index.html">Home</a>
+      <a href="index.html" class="active">Thesis</a>
+      <a href="../projects/index.html">Projects</a>
     </nav>
   </header>
 
   <main>
-    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">LUẬN VĂN THẠC SĨ KHOA HỌC DỮ LIỆU</div>
-    <h1>Ứng dụng các kỹ thuật học máy để phát hiện gian lận trong dữ liệu kế toán – tài chính</h1>
+    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">MASTER'S THESIS — DATA SCIENCE</div>
+    <h1>Applying Machine Learning Techniques to Detect Fraud in Accounting &amp; Financial Data</h1>
     <p class="lede">
-      Xây dựng, triển khai và đánh giá một framework phát hiện bất thường kế toán, ứng dụng
-      các kỹ thuật học máy hiện đại trên dữ liệu sổ cái tổng hợp (General Ledger) thực tế của
-      một doanh nghiệp FDI tại Việt Nam, đảm bảo tuân thủ đầy đủ các chuẩn mực kế toán và kiểm
-      toán Việt Nam hiện hành.
+      Building, deploying, and evaluating an accounting anomaly detection framework that
+      applies modern machine learning techniques to real General Ledger data from an
+      FDI (foreign direct investment) enterprise in Vietnam, while fully complying with
+      current Vietnamese accounting and auditing standards.
     </p>
 
     <div class="tag-row">
@@ -38,173 +37,175 @@
     </div>
 
     <div class="note">
-      Dữ liệu sử dụng trong nghiên cứu (4.218 bút toán, giai đoạn 07–11/2022, sổ cái tổng hợp
-      của một doanh nghiệp FDI hoạt động trong lĩnh vực thương mại tại Việt Nam) đã được mã hóa
-      ẩn danh trước khi bàn giao cho mục đích học thuật. Tên doanh nghiệp, mã số thuế và các mã
-      chứng từ cụ thể không được công bố trên trang này; số liệu minh họa chỉ mang tính thống kê
-      tổng hợp.
+      The data used in this research (4,218 journal entries, July–November 2022, the general
+      ledger of an FDI enterprise in the trading sector in Vietnam) was anonymized before being
+      handed over for academic purposes. The company's name, tax code, and specific voucher
+      IDs are not disclosed on this page; the figures shown here are aggregate statistics only.
     </div>
 
-    <h2>Tính cấp thiết của đề tài</h2>
+    <h2>Why This Research Matters</h2>
     <p>
-      Trong bối cảnh nền kinh tế Việt Nam hội nhập sâu rộng vào chuỗi giá trị toàn cầu, số lượng
-      doanh nghiệp có vốn đầu tư nước ngoài (FDI) và doanh nghiệp áp dụng hệ thống hoạch định
-      nguồn lực doanh nghiệp (ERP) như SAP, Oracle, Microsoft Dynamics ngày càng tăng mạnh. Theo
-      Tổng cục Thống kê Việt Nam (2023), tổng vốn FDI đăng ký mới đạt hơn 36,6 tỷ USD, đồng thời
-      số doanh nghiệp áp dụng ERP trong quản lý tài chính tăng khoảng 18% mỗi năm. Điều này dẫn
-      đến một thực tế là khối lượng dữ liệu kế toán — đặc biệt là bút toán nhật ký trong sổ cái
-      tổng hợp — ngày càng gia tăng với tốc độ chưa từng có. Theo ước tính của SAP (2023), khoảng
-      76% doanh thu giao dịch toàn cầu đi qua một trong các hệ thống ERP của họ.
+      As Vietnam's economy integrates more deeply into global value chains, the number of
+      foreign direct investment (FDI) enterprises and companies adopting Enterprise Resource
+      Planning (ERP) systems such as SAP, Oracle, and Microsoft Dynamics keeps growing rapidly.
+      According to Vietnam's General Statistics Office (2023), newly registered FDI capital
+      exceeded USD 36.6 billion, while the number of enterprises using ERP for financial
+      management grew by roughly 18% per year. As a result, the volume of accounting data —
+      particularly journal entries recorded in the General Ledger — is increasing at an
+      unprecedented rate. SAP (2023) estimates that around 76% of global transaction revenue
+      flows through one of its ERP systems.
     </p>
     <p>
-      Song song với sự phát triển đó, gian lận kế toán ngày càng tinh vi và khó phát hiện. Hiệp
-      hội Kiểm tra Gian lận được Chứng nhận Quốc tế (ACFE, 2022) ước tính rằng tổ chức điển hình
-      mất 5% doanh thu hàng năm do gian lận, với tổng thiệt hại toàn cầu vượt 4,7 nghìn tỷ USD.
-      PwC (2022) ghi nhận rằng 47% các tổ chức được khảo sát đã trải qua ít nhất một hành vi gian
-      lận trong 24 tháng trước đó. Các phương pháp kiểm tra bút toán truyền thống — kiểm tra theo
-      luật Benford, kiểm tra "cờ đỏ" dựa trên các kịch bản gian lận đã biết, và lấy mẫu thống kê
-      theo ISA 530/VSA 530 — chỉ phát hiện được các loại gian lận đã biết trước, nhanh chóng lỗi
-      thời khi kẻ gian lận thích nghi, và không thể xử lý hiệu quả với hàng triệu bút toán mỗi
-      chu kỳ kiểm toán.
+      Alongside this growth, accounting fraud is becoming increasingly sophisticated and harder
+      to detect. The Association of Certified Fraud Examiners (ACFE, 2022) estimates that a
+      typical organization loses 5% of annual revenue to fraud, with total global losses
+      exceeding USD 4.7 trillion. PwC (2022) reports that 47% of surveyed organizations
+      experienced at least one fraud incident within a 24-month period. Traditional journal-entry
+      testing methods — Benford's Law testing, "red-flag" tests based on known fraud scenarios,
+      and statistical sampling under ISA 530/VSA 530 — only catch fraud types that are already
+      known, quickly become outdated as fraudsters adapt, and cannot scale efficiently to
+      millions of entries per audit cycle.
     </p>
     <p>
-      Chính sự kết hợp giữa khối lượng dữ liệu ERP ngày càng lớn, độ tinh vi ngày càng cao của
-      các kịch bản gian lận, và hạn chế của phương pháp truyền thống đã tạo ra một khoảng trống
-      nghiên cứu rõ ràng: cần có một framework học máy không giám sát có khả năng phát hiện bất
-      thường trong toàn bộ dữ liệu GL mà không cần nhãn gian lận đã biết trước, đồng thời tích
-      hợp được các yêu cầu pháp lý đặc thù của hệ thống kế toán Việt Nam theo Thông tư
-      200/2014/TT-BTC, VSA 240 và VSA 530.
-    </p>
-
-    <h2>Đối tượng &amp; phạm vi nghiên cứu</h2>
-    <p>
-      Đối tượng nghiên cứu là các bút toán nhật ký kế toán (journal entries) trong sổ cái tổng
-      hợp của một doanh nghiệp FDI hoạt động theo pháp luật kế toán Việt Nam. Phạm vi nghiên cứu
-      tập trung vào dữ liệu GL trong giai đoạn từ tháng 7/2022 đến tháng 11/2022 (5 tháng), bao
-      gồm 4.218 bút toán đã được mã hóa ẩn danh tuân thủ nghiêm ngặt quy định bảo mật dữ liệu.
-      Đặc điểm dữ liệu phản ánh đặc thù của doanh nghiệp thương mại xuất nhập khẩu: giao dịch đa
-      ngoại tệ, nhiều nhà cung cấp, cấu trúc bút toán với các nghiệp vụ đánh giá lại tỷ giá,
-      thanh toán nhà cung cấp và hạch toán hàng tồn kho.
+      The combination of ever-growing ERP data volumes, increasingly sophisticated fraud
+      schemes, and the limitations of traditional methods creates a clear research gap: the
+      need for an unsupervised machine learning framework capable of detecting anomalies across
+      an entire GL dataset without requiring pre-labeled fraud examples, while also integrating
+      the specific legal requirements of the Vietnamese accounting system under Circular
+      200/2014/TT-BTC, VSA 240, and VSA 530.
     </p>
 
-    <h2>Khung pháp lý áp dụng</h2>
+    <h2>Research Object &amp; Scope</h2>
+    <p>
+      The research object is accounting journal entries recorded in the General Ledger of an
+      FDI enterprise operating under Vietnamese accounting law. The scope is limited to GL data
+      from July 2022 to November 2022 (5 months), comprising 4,218 journal entries that were
+      anonymized in strict compliance with data protection requirements. The data reflects the
+      characteristics of an import-export trading company: multi-currency transactions, multiple
+      vendors, and entry structures involving FX revaluation, vendor payments, and inventory
+      postings.
+    </p>
+
+    <h2>Applicable Legal Framework</h2>
     <table>
-      <thead><tr><th>Văn bản</th><th>Nội dung áp dụng vào pipeline</th></tr></thead>
+      <thead><tr><th>Regulation</th><th>Application in the pipeline</th></tr></thead>
       <tbody>
-        <tr><td>TT200/2014/TT-BTC</td><td>Cấu trúc 9 loại tài khoản; Điều 10 quy định ngày hạch toán (căn cứ Rule backdate)</td></tr>
-        <tr><td>VSA 240 / ISA 240</td><td>Trách nhiệm kiểm toán viên với gian lận; kiểm tra bút toán cuối kỳ, bất thường</td></tr>
-        <tr><td>VSA 530 / ISA 530</td><td>Lấy mẫu kiểm toán — cỡ mẫu tối thiểu n≥200 cho output pipeline</td></tr>
-        <tr><td>Nghị định 05/2019/NĐ-CP</td><td>Kiểm toán nội bộ — cơ sở pháp lý để tích hợp ML vào quy trình CAATs</td></tr>
+        <tr><td>Circular 200/2014/TT-BTC<br><span style="color:var(--text-muted);font-size:0.85em">Vietnam's Enterprise Accounting Regime</span></td><td>9-category chart of accounts structure; Article 10 governs posting dates (basis for the backdating rule)</td></tr>
+        <tr><td>VSA 240 / ISA 240<br><span style="color:var(--text-muted);font-size:0.85em">Auditor's responsibility for fraud</span></td><td>Auditor's duty regarding fraud; requires review of period-end and unusual journal entries</td></tr>
+        <tr><td>VSA 530 / ISA 530<br><span style="color:var(--text-muted);font-size:0.85em">Audit sampling</span></td><td>Audit sampling — minimum sample size n≥200 for pipeline output</td></tr>
+        <tr><td>Decree 05/2019/ND-CP<br><span style="color:var(--text-muted);font-size:0.85em">Internal audit</span></td><td>Internal audit — legal basis for integrating ML into CAATs procedures</td></tr>
       </tbody>
     </table>
 
-    <h2>Thống kê mô tả dữ liệu</h2>
+    <h2>Descriptive Statistics</h2>
     <table>
-      <thead><tr><th>Chỉ số</th><th>Giá trị</th></tr></thead>
+      <thead><tr><th>Metric</th><th>Value</th></tr></thead>
       <tbody>
-        <tr><td>Tổng số bút toán</td><td>4.218 (tháng 7–11/2022)</td></tr>
-        <tr><td>TK Nợ / TK Có duy nhất</td><td>71 / 48</td></tr>
-        <tr><td>Cặp tài khoản Dr–Cr duy nhất</td><td>158</td></tr>
-        <tr><td>Đối tác duy nhất</td><td>106</td></tr>
-        <tr><td>Bút toán âm (đảo chiều)</td><td>2</td></tr>
-        <tr><td>Bút toán có ngoại tệ</td><td>2.460</td></tr>
-        <tr><td>Bút toán backdated vi phạm TT200 Điều 10 (&gt;10 ngày &amp; cross-month)</td><td>82 (1,94%)</td></tr>
-        <tr><td>Độ trễ hạch toán tối đa</td><td>84 ngày</td></tr>
-        <tr><td>Số tiền lớn nhất</td><td>~63,4 tỷ VND</td></tr>
-        <tr><td>Skewness / Kurtosis (phân phối số tiền)</td><td>8,74 / 127,3 (đuôi nặng — heavy-tailed)</td></tr>
+        <tr><td>Total journal entries</td><td>4,218 (Jul–Nov 2022)</td></tr>
+        <tr><td>Unique Debit / Credit accounts</td><td>71 / 48</td></tr>
+        <tr><td>Unique Debit–Credit account pairs</td><td>158</td></tr>
+        <tr><td>Unique counterparties</td><td>106</td></tr>
+        <tr><td>Negative-amount (reversal) entries</td><td>2</td></tr>
+        <tr><td>Entries with foreign currency</td><td>2,460</td></tr>
+        <tr><td>Entries backdated in violation of Circular 200 Article 10 (&gt;10 days &amp; cross-month)</td><td>82 (1.94%)</td></tr>
+        <tr><td>Maximum posting lag</td><td>84 days</td></tr>
+        <tr><td>Largest transaction amount</td><td>~VND 63.4 billion</td></tr>
+        <tr><td>Skewness / Kurtosis (amount distribution)</td><td>8.74 / 127.3 (heavy-tailed)</td></tr>
       </tbody>
     </table>
 
-    <h2>Pipeline thực nghiệm (theo notebook <code>fraud_detection_v3_1</code>)</h2>
+    <h2>Experimental Pipeline (per the <code>fraud_detection_v3_1</code> notebook)</h2>
     <p>
-      Phiên bản pipeline mới nhất huấn luyện song song 4 mô hình phát hiện bất thường và kết hợp
-      kết quả bằng consensus có trọng số, thay vì xử lý tuần tự qua từng tầng riêng lẻ. Nền tảng
-      lý thuyết vẫn dựa trên Schreyer et al. (2017, arXiv:1709.05254) cho công thức điểm AP/RE/AS.
+      The latest pipeline version trains four anomaly-detection models in parallel and combines
+      their outputs through a weighted consensus, rather than processing entries sequentially
+      through separate layers. The underlying theory still follows Schreyer et al. (2017,
+      arXiv:1709.05254) for the AP/RE/AS scoring formulas.
     </p>
     <table>
-      <thead><tr><th>Bước</th><th>Nội dung</th><th>Kết quả thực tế</th></tr></thead>
+      <thead><tr><th>Step</th><th>Description</th><th>Actual result</th></tr></thead>
       <tbody>
-        <tr><td>1. Nạp &amp; làm sạch dữ liệu</td><td>Chuẩn hóa cột, tách cặp Dr/Cr trên cùng dòng</td>
-        <td>4.218 dòng, 71 TK Nợ, 48 TK Có, 158 cặp DR–CR, 106 đối tác</td></tr>
-        <tr><td>2. Phân tích khám phá (EDA)</td><td>Phân phối log(|VND|); kiểm định Benford's Law trên chữ số đầu</td>
-        <td>Benford: lệch có ý nghĩa thống kê (p&lt;0.05)</td></tr>
-        <tr><td>3. Feature Engineering</td><td>16 đặc trưng: log-amount, z-score theo TK/cặp TK, frequency encoding, posting lag, weekend/month-end, ngoại tệ...</td>
-        <td>Ma trận đặc trưng 4.218 × 16, chuẩn hóa bằng RobustScaler</td></tr>
-        <tr><td>4. Huấn luyện 4 mô hình</td><td>Isolation Forest, LOF, KMeans, Autoencoder (PyTorch: BCEWithLogitsLoss, Xavier init, LeakyReLU 0.4, Dropout 0.1, bottleneck 3 neuron)</td>
-        <td>AE: 30 epoch, loss cuối 0,2729; điểm bất thường IF/LOF/KMeans/AE theo từng thang riêng</td></tr>
-        <tr><td>5. Tính AP, RE, AS &amp; phân loại</td><td>Công thức Schreyer eq.(4)(5)(6); trực quan hóa latent space 3D (bottleneck AE)</td>
-        <td>NORMAL 2.307 (54,7%) · GLOBAL 1.024 (24,3%) · LOCAL 887 (21,0%)</td></tr>
-        <tr><td>6. Đánh giá định lượng</td><td>Synthetic anomaly injection (chèn thêm bút toán GLOBAL/LOCAL giả lập) để tính ROC-AUC qua nhiều random seed — do dữ liệu thật không có nhãn gian lận xác nhận</td>
-        <td>Thiết kế đánh giá (module <code>evaluate_models</code>)</td></tr>
-        <tr><td>7. Consensus có trọng số</td><td>Kết hợp điểm 4 mô hình theo trọng số tỷ lệ với AUC từng mô hình</td>
+        <tr><td>1. Load &amp; clean data</td><td>Normalize columns; pair Debit/Credit lines on the same row</td>
+        <td>4,218 rows, 71 Debit accounts, 48 Credit accounts, 158 Dr–Cr pairs, 106 counterparties</td></tr>
+        <tr><td>2. Exploratory Data Analysis (EDA)</td><td>Distribution of log(|amount|); Benford's Law test on the leading digit</td>
+        <td>Benford: statistically significant deviation (p&lt;0.05)</td></tr>
+        <tr><td>3. Feature Engineering</td><td>16 features: log-amount, z-scores by account/account-pair, frequency encoding, posting lag, weekend/month-end flags, FX flag...</td>
+        <td>4,218 × 16 feature matrix, scaled with RobustScaler</td></tr>
+        <tr><td>4. Train 4 models</td><td>Isolation Forest, LOF, KMeans, Autoencoder (PyTorch: BCEWithLogitsLoss, Xavier init, LeakyReLU 0.4, Dropout 0.1, 3-neuron bottleneck)</td>
+        <td>AE: 30 epochs, final loss 0.2729; each model produces anomaly scores on its own scale</td></tr>
+        <tr><td>5. Compute AP, RE, AS &amp; classify</td><td>Schreyer eq.(4)(5)(6); 3D latent-space visualization (AE bottleneck)</td>
+        <td>NORMAL 2,307 (54.7%) · GLOBAL 1,024 (24.3%) · LOCAL 887 (21.0%)</td></tr>
+        <tr><td>6. Quantitative evaluation</td><td>Synthetic anomaly injection (simulated GLOBAL/LOCAL anomalies) to compute ROC-AUC across multiple random seeds — needed since the real data has no confirmed fraud labels</td>
+        <td>Evaluation design (the <code>evaluate_models</code> module)</td></tr>
+        <tr><td>7. Weighted consensus</td><td>Combine the 4 models' scores, weighted proportionally to each model's AUC</td>
         <td>—</td></tr>
-        <tr><td>8. Giải thích bằng SHAP</td><td>SHAP giải thích lý do Autoencoder cho điểm RE cao với từng bút toán</td>
-        <td>Đặc trưng kỳ vọng quan trọng nhất: tần suất cặp DR-CR, độ lệch chuẩn trong cặp DR-CR</td></tr>
-        <tr><td>9. Chọn mẫu kiểm toán &amp; xuất Excel</td><td>3 lớp theo ISA 530/240: (1) toàn bộ bút toán ≥3/4 mô hình đồng thuận, (2) ngưỡng mean+2·std, (3) Monetary Unit Sampling</td>
-        <td>Thiết kế lớp lấy mẫu theo chuẩn kiểm toán</td></tr>
+        <tr><td>8. SHAP explainability</td><td>SHAP explains why the Autoencoder assigns a high RE score to a given entry</td>
+        <td>Expected top features: Dr-Cr pair frequency, within-pair amount deviation</td></tr>
+        <tr><td>9. Audit sampling &amp; Excel export</td><td>3 tiers per ISA 530/240: (1) every entry flagged by ≥3/4 models, (2) mean+2·std materiality threshold, (3) Monetary Unit Sampling</td>
+        <td>Sampling tier design per auditing standards</td></tr>
       </tbody>
     </table>
     <p style="font-size:0.85rem;color:var(--text-muted)">
-      Ghi chú: các bước 6–9 là phần mở rộng định lượng của pipeline; bản notebook đang trong quá
-      trình hoàn thiện tại thời điểm viết trang này nên chưa có số liệu AUC cuối cùng để công bố.
+      Note: steps 6–9 are the pipeline's quantitative extension; the notebook was still a work
+      in progress at the time this page was written, so no final AUC figures are published here.
     </p>
 
-    <h2>Một số kết quả minh họa</h2>
+    <h2>Illustrative Results</h2>
 
     <figure>
-      <img src="../assets/img/thesis-eda.png" alt="Phân phối log(số tiền) và tổng phát sinh theo tháng">
-      <figcaption>Phân tích khám phá dữ liệu (EDA): phân phối số tiền lệch phải mạnh (heavy-tailed)
-      và biến động phát sinh bút toán theo tháng.</figcaption>
+      <img src="../assets/img/thesis-eda.png" alt="Distribution of log(amount) and monthly entry totals">
+      <figcaption>Exploratory Data Analysis (EDA): a strongly right-skewed (heavy-tailed) amount
+      distribution and monthly variation in entry volume.</figcaption>
     </figure>
 
     <figure>
-      <img src="../assets/img/thesis-benford.png" alt="Kiểm định Benford's Law trên chữ số đầu tiên">
-      <figcaption>Kiểm định Benford's Law trên chữ số đầu tiên của số tiền — phát hiện lệch chuẩn
-      có ý nghĩa thống kê so với phân phối kỳ vọng.</figcaption>
+      <img src="../assets/img/thesis-benford.png" alt="Benford's Law test on the leading digit">
+      <figcaption>Benford's Law test on the leading digit of transaction amounts — a statistically
+      significant deviation from the expected distribution.</figcaption>
     </figure>
 
     <figure>
-      <img src="../assets/img/thesis-shap-bar.png" alt="SHAP feature importance của mô hình Autoencoder">
-      <figcaption>Top đặc trưng ảnh hưởng nhất đến điểm bất thường của Autoencoder, theo SHAP —
-      chủ yếu là độ lệch chuẩn số tiền so với tài khoản/đối tác và mức độ hiếm gặp của đối tác giao dịch.</figcaption>
+      <img src="../assets/img/thesis-shap-bar.png" alt="SHAP feature importance for the Autoencoder model">
+      <figcaption>Top features driving the Autoencoder's anomaly score, per SHAP — mainly the
+      amount deviation relative to the account/counterparty and how rarely the counterparty appears.</figcaption>
     </figure>
 
     <figure>
       <img src="../assets/img/thesis-shap-beeswarm.png" alt="SHAP beeswarm plot">
-      <figcaption>SHAP beeswarm: chiều tác động (tăng/giảm điểm bất thường) của từng đặc trưng
-      trên toàn bộ tập bút toán được gắn cờ.</figcaption>
+      <figcaption>SHAP beeswarm plot: the direction of each feature's effect (raising or lowering
+      the anomaly score) across all flagged entries.</figcaption>
     </figure>
 
-    <h2>Kết luận</h2>
+    <h2>Conclusion</h2>
     <p>
-      Luận văn đã đạt được các mục tiêu đề ra: (1) xây dựng thành công framework phát hiện bất
-      thường kế toán, kết hợp Isolation Forest, LOF, KMeans, Autoencoder và SHAP trên dữ liệu GL
-      thực tế; (2) tích hợp đầy đủ các yêu cầu pháp lý Việt Nam (TT200/2014 Điều 10, VSA 240/530,
-      ISA 530) vào logic phân loại và ngưỡng output; (3) phân loại thành công 4.218 bút toán
-      thành các nhóm bất thường: NORMAL 2.307 (54,7%), GLOBAL 1.024 (24,3%), LOCAL 887 (21,0%);
-      (4) đề xuất quy trình CAATs 5 bước có thể áp dụng ngay theo Nghị định 05/2019/NĐ-CP.
+      The thesis achieved its stated objectives: (1) successfully building an accounting anomaly
+      detection framework combining Isolation Forest, LOF, KMeans, Autoencoder, and SHAP on real
+      GL data; (2) fully integrating Vietnamese legal requirements (Circular 200/2014 Article 10,
+      VSA 240/530, ISA 530) into the classification logic and output thresholds; (3) successfully
+      classifying 4,218 journal entries into anomaly groups: NORMAL 2,307 (54.7%), GLOBAL 1,024
+      (24.3%), LOCAL 887 (21.0%); (4) proposing a 5-step CAATs process that can be adopted
+      immediately under Decree 05/2019/ND-CP.
     </p>
 
-    <h3>Quy trình CAATs 5 bước đề xuất</h3>
+    <h3>Proposed 5-Step CAATs Process</h3>
     <ol>
-      <li>Chuẩn bị dữ liệu — trích xuất dữ liệu GL từ hệ thống ERP.</li>
-      <li>Chạy pipeline ML — thực thi notebook, xuất kết quả phân loại kèm AS score và SHAP explanations.</li>
-      <li>Tạo Flag Card tiếng Việt cho từng bút toán bị flag: lý do cảnh báo, top SHAP features, khuyến nghị điều tra.</li>
-      <li>Kiểm toán viên nội bộ review Flag Card, xác nhận/bác bỏ cảnh báo, điều tra chi tiết.</li>
-      <li>Lập báo cáo kiểm toán tích hợp kết quả ML, cập nhật quy tắc rule-based cho chu kỳ tiếp theo.</li>
+      <li>Data preparation — extract GL data from the ERP system.</li>
+      <li>Run the ML pipeline — execute the notebook, output classification results with AS scores and SHAP explanations.</li>
+      <li>Generate a Vietnamese-language Flag Card for each flagged entry: reason for the flag, top SHAP features, and an investigation recommendation.</li>
+      <li>Internal auditor review — review the Flag Card, confirm or dismiss the flag, and investigate confirmed-risk entries in detail.</li>
+      <li>Reporting &amp; follow-up — produce an audit report integrating the ML results and update rule-based thresholds for the next cycle.</li>
     </ol>
 
-    <h3>Hạn chế</h3>
+    <h3>Limitations</h3>
     <ul>
-      <li>Đánh giá định lượng (AUC) dựa trên synthetic anomaly injection, không phải nhãn gian lận thật.</li>
-      <li>Bất thường ≠ gian lận — kết quả pipeline là cờ cảnh báo để kiểm toán viên rà soát, không phải kết luận cuối cùng.</li>
-      <li>Điểm AP chỉ dùng 4 thuộc tính phân loại — có thể bỏ sót một số loại bất thường khác (ví dụ theo thời gian).</li>
-      <li>Posting lag: bút toán cuối năm thường có độ trễ cao dù hợp lệ (điều chỉnh sau kiểm toán) — cần loại trừ trường hợp này khỏi red-flag.</li>
-      <li>Dataset 4.218 dòng — quy mô nhỏ so với hệ thống ERP lớn, AUC có thể dao động nhiều hơn trên tập dữ liệu lớn hơn.</li>
-      <li>Phạm vi chỉ một doanh nghiệp FDI — tính tổng quát hóa cần được kiểm chứng thêm.</li>
+      <li>Quantitative evaluation (AUC) relies on synthetic anomaly injection, not real fraud labels.</li>
+      <li>Anomaly ≠ fraud — the pipeline's output is a flag for the auditor to review, not a final conclusion.</li>
+      <li>The AP score uses only 4 categorical attributes — some other anomaly types (e.g. time-based) may be missed.</li>
+      <li>Posting lag: year-end entries often show high lag even when legitimate (post-audit adjustments) — this case needs to be excluded from the red-flag rule.</li>
+      <li>A 4,218-row dataset — small relative to large ERP systems; AUC may fluctuate more on a larger dataset.</li>
+      <li>Scope limited to a single FDI enterprise — generalizability still needs to be verified.</li>
     </ul>
 
-    <h2>Công cụ</h2>
+    <h2>Tools</h2>
     <div class="tag-row">
       <span class="tag">Python 3.10</span>
       <span class="tag">scikit-learn</span>
@@ -214,7 +215,7 @@
     </div>
 
     <div class="note">
-      Cơ sở lý thuyết chính: Schreyer et al. (2017/2018, arXiv:1709.05254) — Detection of
+      Core theoretical foundation: Schreyer et al. (2017/2018, arXiv:1709.05254) — Detection of
       Anomalies in Large-Scale Accounting Data using Deep Autoencoder Networks; Breunig et al.
       (2000) — LOF; Liu et al. (2008) — Isolation Forest.
     </div>
