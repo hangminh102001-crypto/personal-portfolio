@@ -37,10 +37,10 @@
     </div>
 
     <div class="note">
-      The data used in this research (4,218 journal entries, July–November 2022, the general
-      ledger of an FDI enterprise in the trading sector in Vietnam) was anonymized before being
-      handed over for academic purposes. The company's name, tax code, and specific voucher
-      IDs are not disclosed on this page; the figures shown here are aggregate statistics only.
+      The data used in this research (9,804 general-ledger lines, January–December 2022, from
+      an FDI enterprise in the trading sector in Vietnam) was anonymized before being handed
+      over for academic purposes. The company's name, tax code, and specific voucher IDs are
+      not disclosed on this page; the figures shown here are aggregate statistics only.
     </div>
 
     <h2>Why This Research Matters</h2>
@@ -77,13 +77,19 @@
 
     <h2>Research Object &amp; Scope</h2>
     <p>
-      The research object is accounting journal entries recorded in the General Ledger of an
-      FDI enterprise operating under Vietnamese accounting law. The scope is limited to GL data
-      from July 2022 to November 2022 (5 months), comprising 4,218 journal entries that were
-      anonymized in strict compliance with data protection requirements. The data reflects the
-      characteristics of an import-export trading company: multi-currency transactions, multiple
-      vendors, and entry structures involving FX revaluation, vendor payments, and inventory
-      postings.
+      The research object is accounting entries recorded in the General Ledger of an FDI
+      enterprise operating under Vietnamese accounting law. The scope covers the full 2022
+      fiscal year (January–December), comprising 9,804 individual debit/credit ledger lines
+      that were anonymized in strict compliance with data protection requirements. The data
+      reflects the characteristics of an import-export trading company: multi-currency
+      transactions, multiple vendors, and entry structures involving FX revaluation, vendor
+      payments, and inventory postings.
+    </p>
+    <p>
+      An initial subset covering July–November 2022 (4,218 paired journal entries) — the only
+      part of the dataset with both a voucher date and a separate posting date recorded — was
+      used to validate the anomaly-detection pipeline described below. Extending the pipeline
+      to the full 12-month dataset is in progress.
     </p>
 
     <h2>Applicable Legal Framework</h2>
@@ -98,6 +104,27 @@
     </table>
 
     <h2>Descriptive Statistics</h2>
+    <p>
+      Two levels of granularity are referenced on this page: the full 2022 dataset that scopes
+      the research, and the Jul–Nov 2022 subset used to validate the pipeline below.
+    </p>
+
+    <h3>Full dataset — Jan–Dec 2022</h3>
+    <table>
+      <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Total ledger lines</td><td>9,804 (Jan–Dec 2022)</td></tr>
+        <tr><td>Unique accounts</td><td>48</td></tr>
+        <tr><td>Unique level-1 account groups</td><td>25</td></tr>
+        <tr><td>Unique counterparties</td><td>137</td></tr>
+        <tr><td>Debit / Credit lines</td><td>4,728 / 4,728</td></tr>
+        <tr><td>Lines with foreign currency</td><td>578</td></tr>
+        <tr><td>Largest transaction amount</td><td>~VND 32 billion</td></tr>
+        <tr><td>Skewness / Kurtosis (amount distribution)</td><td>6.94 / 53.7 (heavy-tailed)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Validation subset — Jul–Nov 2022 (used in the pipeline below)</h3>
     <table>
       <thead><tr><th>Metric</th><th>Value</th></tr></thead>
       <tbody>
@@ -116,10 +143,12 @@
 
     <h2>Experimental Pipeline (per the <code>fraud_detection_v3_1</code> notebook)</h2>
     <p>
-      The latest pipeline version trains four anomaly-detection models in parallel and combines
-      their outputs through a weighted consensus, rather than processing entries sequentially
-      through separate layers. The underlying theory still follows Schreyer et al. (2017,
-      arXiv:1709.05254) for the AP/RE/AS scoring formulas.
+      The results below were computed on the Jul–Nov 2022 validation subset (4,218 paired
+      entries) — the currently completed run. The latest pipeline version trains four
+      anomaly-detection models in parallel and combines their outputs through a weighted
+      consensus, rather than processing entries sequentially through separate layers. The
+      underlying theory still follows Schreyer et al. (2017, arXiv:1709.05254) for the AP/RE/AS
+      scoring formulas.
     </p>
     <table>
       <thead><tr><th>Step</th><th>Description</th><th>Result</th></tr></thead>
@@ -181,8 +210,8 @@
       detection framework combining Isolation Forest, LOF, KMeans, Autoencoder, and SHAP on real
       GL data; (2) fully integrating Vietnamese legal requirements (Circular 200/2014 Article 10,
       VSA 240/530, ISA 530) into the classification logic and output thresholds; (3) successfully
-      classifying 4,218 journal entries into anomaly groups: NORMAL 2,307 (54.7%), GLOBAL 1,024
-      (24.3%), LOCAL 887 (21.0%); (4) proposing a 5-step CAATs process that can be adopted
+      classifying the 4,218-entry validation subset into anomaly groups: NORMAL 2,307 (54.7%),
+      GLOBAL 1,024 (24.3%), LOCAL 887 (21.0%); (4) proposing a 5-step CAATs process that can be adopted
       immediately under Decree 05/2019/ND-CP.
     </p>
 
@@ -201,7 +230,7 @@
       <li>Anomaly ≠ fraud — the pipeline's output is a flag for the auditor to review, not a final conclusion.</li>
       <li>The AP score uses only 4 categorical attributes — some other anomaly types (e.g. time-based) may be missed.</li>
       <li>Posting lag: year-end entries often show high lag even when legitimate (post-audit adjustments) — this case needs to be excluded from the red-flag rule.</li>
-      <li>A 4,218-row dataset — small relative to large ERP systems; AUC may fluctuate more on a larger dataset.</li>
+      <li>The pipeline has so far been validated on a 4,218-entry subset (Jul–Nov 2022); extending it to the full 9,804-line, 12-month dataset is in progress and may shift the results shown here.</li>
       <li>Scope limited to a single FDI enterprise — generalizability still needs to be verified.</li>
     </ul>
 
