@@ -122,7 +122,7 @@
       arXiv:1709.05254) for the AP/RE/AS scoring formulas.
     </p>
     <table>
-      <thead><tr><th>Step</th><th>Description</th><th>Actual result</th></tr></thead>
+      <thead><tr><th>Step</th><th>Description</th><th>Result</th></tr></thead>
       <tbody>
         <tr><td>1. Load &amp; clean data</td><td>Normalize columns; pair Debit/Credit lines on the same row</td>
         <td>4,218 rows, 71 Debit accounts, 48 Credit accounts, 158 Dr–Cr pairs, 106 counterparties</td></tr>
@@ -135,13 +135,13 @@
         <tr><td>5. Compute AP, RE, AS &amp; classify</td><td>Schreyer eq.(4)(5)(6); 3D latent-space visualization (AE bottleneck)</td>
         <td>NORMAL 2,307 (54.7%) · GLOBAL 1,024 (24.3%) · LOCAL 887 (21.0%)</td></tr>
         <tr><td>6. Quantitative evaluation</td><td>Synthetic anomaly injection (simulated GLOBAL/LOCAL anomalies) to compute ROC-AUC across multiple random seeds — needed since the real data has no confirmed fraud labels</td>
-        <td>Evaluation design (the <code>evaluate_models</code> module)</td></tr>
+        <td>Designed, not yet run to completion (see note below)</td></tr>
         <tr><td>7. Weighted consensus</td><td>Combine the 4 models' scores, weighted proportionally to each model's AUC</td>
-        <td>—</td></tr>
+        <td>Feeds into the final anomaly score</td></tr>
         <tr><td>8. SHAP explainability</td><td>SHAP explains why the Autoencoder assigns a high RE score to a given entry</td>
         <td>Expected top features: Dr-Cr pair frequency, within-pair amount deviation</td></tr>
         <tr><td>9. Audit sampling &amp; Excel export</td><td>3 tiers per ISA 530/240: (1) every entry flagged by ≥3/4 models, (2) mean+2·std materiality threshold, (3) Monetary Unit Sampling</td>
-        <td>Sampling tier design per auditing standards</td></tr>
+        <td>Three-tier sampling design aligned with auditing standards</td></tr>
       </tbody>
     </table>
     <p style="font-size:0.85rem;color:var(--text-muted)">
