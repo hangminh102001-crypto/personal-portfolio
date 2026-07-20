@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Đánh giá thực nghiệm 8 thuật toán phân cụm — Nguyễn Minh Hằng</title>
+<title>Nghiên cứu các thuật toán phân cụm dữ liệu — Nguyễn Minh Hằng</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -12,17 +12,19 @@
     <a class="brand" href="../index.html">Nguyễn Minh Hằng</a>
     <nav class="site-nav">
       <a href="../index.html">Trang chủ</a>
-      <a href="../thesis/index.html">Thesis</a>
-      <a href="index.html" class="active">Academic Projects</a>
+      <a href="../thesis/index.html">Luận văn</a>
+      <a href="index.html" class="active">Dự án</a>
     </nav>
   </header>
 
   <main>
-    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">GROUP PROJECT — NHÓM 02</div>
-    <h1>Nghiên cứu các thuật toán phân cụm dữ liệu và đánh giá thực nghiệm</h1>
+    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">CHUYÊN ĐỀ — HỌC KHÔNG GIÁM SÁT</div>
+    <h1>Nghiên cứu các thuật toán phân cụm dữ liệu và đánh giá thực nghiệm một số bộ dữ liệu</h1>
     <p class="lede">
-      Đánh giá thực nghiệm có hệ thống 8 phương pháp phân cụm tiêu biểu trên 4 bộ dữ liệu chuẩn,
-      thực hiện cùng Nguyễn Đức Anh và Phạm Bá Ngọc Hiển.
+      Đánh giá thực nghiệm có hệ thống 8 phương pháp phân cụm tiêu biểu — K-Means,
+      Agglomerative Clustering (Ward, Complete, Average), Gaussian Mixture Model
+      (Full, Tied), Spectral Clustering (RBF) và DBSCAN — trên bốn bộ dữ liệu chuẩn:
+      Iris, Wine, Breast Cancer Wisconsin và Digits.
     </p>
 
     <div class="tag-row">
@@ -34,22 +36,47 @@
       <span class="tag">PCA / t-SNE / UMAP</span>
     </div>
 
-    <h2>Mục tiêu &amp; phương pháp</h2>
+    <h2>Lời mở đầu</h2>
     <p>
-      Nghiên cứu tuân thủ nghiêm ngặt nguyên tắc không giám sát: nhãn được niêm phong hoàn toàn
-      trong suốt các bước tiền xử lý, giảm chiều, huấn luyện và lựa chọn siêu tham số — chỉ được
-      mở ra một lần duy nhất ở bước đánh giá ngoại tại cuối cùng, nhằm mô phỏng đúng điều kiện
-      triển khai thực tế nơi nhãn thường không có sẵn.
+      Trong thời đại chuyển đổi số, dữ liệu đang trở thành một trong những nguồn tài nguyên
+      quan trọng nhất đối với các tổ chức, doanh nghiệp và hoạt động nghiên cứu khoa học.
+      Sự phát triển mạnh mẽ của các hệ thống thông tin, thiết bị cảm biến và nền tảng số đã
+      tạo ra khối lượng dữ liệu khổng lồ với nhiều dạng thức khác nhau. Tuy nhiên, phần lớn
+      dữ liệu được thu thập trong thực tế không đi kèm nhãn hoặc thông tin phân loại rõ
+      ràng, khiến việc khai thác tri thức từ dữ liệu trở thành một thách thức lớn. Trong bối
+      cảnh đó, các phương pháp học không giám sát (Unsupervised Learning) đóng vai trò
+      quan trọng trong việc khám phá cấu trúc tiềm ẩn của dữ liệu, hỗ trợ quá trình phân
+      tích và ra quyết định dựa trên dữ liệu.
     </p>
     <p>
-      Pipeline thực nghiệm 7 bước được áp dụng đồng nhất cho 8 thuật toán
-      (K-Means, Agglomerative Ward/Complete/Average, GMM Full/Tied, Spectral RBF, DBSCAN)
-      trên 4 bộ dữ liệu: Iris, Wine, Breast Cancer Wisconsin, Digits. Số cụm K được chọn
-      không giám sát bằng chiến lược <strong>Silhouette-Optimum</strong>, sau đó đối chiếu với
-      số nhóm thực (K<sub>true</sub>).
+      Phân cụm dữ liệu (Clustering) là một trong những bài toán nền tảng và phổ biến nhất
+      của học không giám sát. Mục tiêu của phân cụm là nhóm các đối tượng dữ liệu có đặc
+      điểm tương đồng vào cùng một cụm, đồng thời đảm bảo sự khác biệt rõ rệt giữa các
+      cụm khác nhau. Không giống như các bài toán phân loại có giám sát, phân cụm không
+      yêu cầu dữ liệu đầu vào phải được gán nhãn trước.
+    </p>
+    <p>
+      Xuất phát từ những yêu cầu đó, báo cáo này tập trung nghiên cứu một cách hệ thống
+      các nền tảng lý thuyết và quy trình thực nghiệm của bài toán phân cụm trên dữ liệu
+      dạng bảng. Nội dung được tổ chức theo một pipeline phân tích dữ liệu hoàn chỉnh, bao
+      gồm các bước tiền xử lý dữ liệu, giảm chiều, xây dựng mô hình phân cụm, trực quan
+      hóa kết quả và đánh giá hiệu năng của các thuật toán. Thông qua việc phân tích và
+      thực nghiệm trên nhiều bộ dữ liệu kinh điển như Iris, Wine, Digits và Breast Cancer,
+      báo cáo nhằm làm rõ nguyên lý hoạt động, đặc điểm và khả năng ứng dụng của từng
+      phương pháp phân cụm trong các bối cảnh dữ liệu khác nhau.
     </p>
 
-    <h2>Kết quả chính</h2>
+    <h2>Thiết kế thực nghiệm</h2>
+    <p>
+      Nghiên cứu tuân thủ nghiêm ngặt <strong>nguyên tắc không giám sát</strong>: nhãn được niêm phong
+      hoàn toàn trong suốt các bước tiền xử lý, giảm chiều, huấn luyện và lựa chọn siêu tham số,
+      chỉ được mở ra một lần duy nhất tại giai đoạn đánh giá ngoại tại cuối cùng — phản ánh
+      đúng điều kiện triển khai thực tế nơi nhãn thường không có sẵn hoặc cực kỳ tốn kém để
+      thu thập. Số cụm K được chọn theo chiến lược <strong>Silhouette-Optimum</strong>
+      (K* = argmax<sub>K∈{2,...,14}</sub> Sil(K)), sau đó đối chiếu với số nhóm thực K<sub>true</sub>.
+    </p>
+
+    <h2>Tổng kết kết quả tốt nhất trên 4 dataset</h2>
     <table>
       <thead><tr><th>Dataset</th><th>K<sub>Sil</sub></th><th>K<sub>true</sub></th><th>Khớp?</th><th>Best Method</th><th>Best ARI</th><th>Best ACC</th></tr></thead>
       <tbody>
@@ -61,38 +88,126 @@
     </table>
     <p style="font-size:0.85rem;color:var(--text-muted)">*DBSCAN đạt ARI=1.0 trên Digits nhưng loại bỏ 96% mẫu là noise — không thực tế để triển khai.</p>
 
-    <h3>Phát hiện nổi bật</h3>
+    <h3>Ranking ARI trung bình theo phương pháp (không tính DBSCAN-Digits)</h3>
+    <table>
+      <thead><tr><th>Phương pháp</th><th>Iris</th><th>Wine</th><th>BC</th><th>Digits</th><th>Mean ARI</th></tr></thead>
+      <tbody>
+        <tr><td>GMM Tied</td><td>#2</td><td>#1</td><td>#2</td><td>#3</td><td>0.687</td></tr>
+        <tr><td>KMeans</td><td>#2</td><td>#3</td><td>#3</td><td>#3</td><td>0.664</td></tr>
+        <tr><td>GMM Full</td><td>#2</td><td>#4</td><td>#1</td><td>#5</td><td>0.646</td></tr>
+        <tr><td>Agglo. Ward</td><td>#3</td><td>#5</td><td>#4</td><td>#1</td><td>0.643</td></tr>
+        <tr><td>DBSCAN</td><td>#1</td><td>#2</td><td>#5</td><td>#1*</td><td>0.657</td></tr>
+        <tr><td>Spectral RBF</td><td>#2</td><td>#7</td><td>#6</td><td>#8</td><td>0.255</td></tr>
+        <tr><td>Agglo. Complete</td><td>#4</td><td>#6</td><td>#6</td><td>#6</td><td>0.248</td></tr>
+        <tr><td>Agglo. Average</td><td>#2</td><td>#8</td><td>#7</td><td>#7</td><td>0.143</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Kết luận</h2>
+    <p>
+      Nghiên cứu này trình bày một đánh giá thực nghiệm có hệ thống về tám phương pháp phân
+      cụm tiêu biểu — K-Means, Agglomerative Clustering (Ward, Complete, Average), Gaussian
+      Mixture Model (Full, Tied), Spectral Clustering (RBF) và DBSCAN — trên bốn bộ dữ liệu
+      chuẩn được sử dụng rộng rãi trong cộng đồng học máy: Iris, Wine, Breast Cancer Wisconsin
+      và Digits. Toàn bộ quy trình được thiết kế theo một pipeline bảy bước thống nhất, tuân thủ
+      nghiêm ngặt nguyên tắc không giám sát... Cách tiếp cận này đảm bảo tính khách quan và
+      khả năng so sánh công bằng giữa các phương pháp, đồng thời phản ánh điều kiện triển khai
+      thực tế — nơi nhãn thường không có sẵn hoặc cực kỳ tốn kém để thu thập.
+    </p>
+
+    <h3>Độ chính xác của Silhouette-Optimum trong lựa chọn K</h3>
+    <p>
+      Kết quả cho thấy phương pháp này đạt <strong>độ chính xác 75%</strong>: K*<sub>Sil</sub> = K<sub>true</sub>
+      trên Wine (K=3), Breast Cancer (K=2) và Digits (K=10), và cho kết quả sai lệch duy nhất
+      trên Iris (K*<sub>Sil</sub>=2 so với K<sub>true</sub>=3). Đáng chú ý nhất là Digits: với không gian
+      64 chiều và 10 lớp mục tiêu, Silhouette-Optimum vẫn phục hồi chính xác K*=10 — kết quả
+      không hiển nhiên vì lời nguyền chiều thường làm phẳng cấu trúc khoảng cách trong không
+      gian cao chiều. Trường hợp Iris không phải là một lỗi phương pháp: dữ liệu Iris được biết
+      đến rộng rãi trong văn liệu về sự chồng lấn đáng kể giữa hai loài Iris versicolor và
+      Iris virginica, nên Silhouette-Optimum đang phản ánh trung thực cấu trúc hình học của
+      dữ liệu chứ không phải mắc lỗi.
+    </p>
+
+    <h3>Sự phá vỡ tương quan giữa đánh giá nội tại và ngoại tại</h3>
+    <p>
+      Phát hiện trung tâm và có hàm ý phương pháp luận quan trọng nhất của nghiên cứu này là
+      mối tương quan giữa Silhouette Score và Adjusted Rand Index không phải là hằng số mà biến
+      động mạnh theo đặc tính hình học của từng bộ dữ liệu, bao gồm cả trường hợp tương quan
+      âm mạnh — tức là chỉ số nội tại xếp hạng các thuật toán theo chiều ngược lại với chất lượng
+      thực sự.
+    </p>
+    <table>
+      <thead><tr><th>Dataset</th><th>ρ(Sil, ARI)</th><th>Best<sub>Sil</sub> = Best<sub>ARI</sub>?</th><th>Nhận xét</th></tr></thead>
+      <tbody>
+        <tr><td>Iris</td><td>+0.992</td><td>✓ (DBSCAN)</td><td>Tương quan rất cao, chỉ số đáng tin cậy</td></tr>
+        <tr><td>Wine</td><td>+0.757</td><td>✗ (Sil: DBSCAN / ARI: GMM Tied)</td><td>Tương quan khá, sai lệch nhỏ</td></tr>
+        <tr><td>Breast Cancer</td><td>−0.928</td><td>✗ (ngược hoàn toàn!)</td><td>Nguy hiểm — chỉ số misleading</td></tr>
+        <tr><td>Digits</td><td>−0.228</td><td>✗ (gần như độc lập)</td><td>Không tương quan trong bài toán 10-class</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Trường hợp nghiêm trọng nhất là Breast Cancer (ρ=−0.928): Agglomerative Complete và
+      Spectral RBF đạt Silhouette cao nhất (0.661) nhưng ARI ≈ 0 — hai phương pháp này tìm
+      được các cụm hình học compact, nhỏ gọn, nhưng hoàn toàn không tương ứng với ranh giới
+      lâm sàng giữa tế bào ác tính và lành tính. Kết quả này có hàm ý phương pháp luận nghiêm
+      trọng: trong các bài toán có ngữ nghĩa ứng dụng rõ ràng — y tế, sinh học phân tử, tài
+      chính, phân khúc khách hàng — việc sử dụng Silhouette Score như chỉ số lựa chọn mô hình
+      duy nhất <strong>có thể dẫn đến lựa chọn thuật toán sai và hậu quả ứng dụng nghiêm trọng</strong>.
+    </p>
+
+    <h3>Hiệu suất so sánh giữa các họ thuật toán</h3>
     <ul>
-      <li><strong>Silhouette-Optimum đạt độ chính xác 75%</strong> trong việc phục hồi số cụm thực
-      (khớp trên Wine, Breast Cancer, Digits — kể cả không gian 64 chiều của Digits).</li>
-      <li><strong>Tương quan Silhouette–ARI không ổn định</strong>: từ +0.992 (Iris) đến −0.928
-      (Breast Cancer) — nghĩa là chỉ số nội tại đôi khi xếp hạng thuật toán theo chiều
-      <em>ngược lại</em> so với chất lượng thực sự. Đây là cảnh báo quan trọng khi áp dụng
-      clustering vào các bài toán có ngữ nghĩa rõ ràng (y tế, tài chính).</li>
-      <li><strong>GMM Tied</strong> đạt ARI trung bình cao nhất qua 4 dataset (0.687) nhờ ràng buộc
-      hiệp phương sai chung hoạt động như regularization, ổn định hơn GMM Full trên dữ liệu nhỏ.</li>
-      <li><strong>Agglomerative Complete/Average thất bại có hệ thống</strong> trên dữ liệu nhiều chiều
-      (ARI ≈ 0) do hiện tượng chaining effect.</li>
+      <li><strong>K-Means</strong>: hiệu suất ổn định và đồng đều (ARI 0.534–0.898), thời gian tính toán
+      thấp nhất; giả định hình cầu không phải hạn chế nghiêm trọng khi dữ liệu có cấu trúc tương thích.</li>
+      <li><strong>Agglomerative Ward</strong>: nổi bật nhất trong không gian cao chiều — trên Digits (64D)
+      đạt ARI=0.664, vượt trội K-Means, GMM Full và Spectral RBF, dù có Silhouette thấp nhất.</li>
+      <li><strong>Agglomerative Complete/Average</strong>: thất bại có hệ thống trên dữ liệu nhiều chiều
+      (ARI≈0 trên Digits) do hiện tượng chaining effect.</li>
+      <li><strong>GMM Tied</strong> đạt ARI cao nhất trên Wine (0.946, chỉ sai 3/178 mẫu) và mean ARI
+      cao nhất tổng hợp — ràng buộc tied covariance hoạt động như regularization hiệu quả.</li>
+      <li><strong>DBSCAN</strong>: hành vi nhị phân rõ nét theo số chiều — tốt trên Iris/Wine (chiều thấp,
+      có outlier) nhưng trên Wine phải loại 65.7% mẫu làm noise để đạt ARI cao; trên Digits
+      loại tới 96.3% mẫu, khiến kết quả ARI=1.0 chỉ là artefact thống kê.</li>
+      <li><strong>Spectral RBF</strong>: không đạt hiệu suất cạnh tranh trên bất kỳ dataset nào (ARI trung
+      bình 0.255), nhân RBF với bandwidth cố định không đủ linh hoạt trong không gian nhiều chiều.</li>
     </ul>
 
-    <h2>Khuyến nghị thực hành rút ra</h2>
+    <h3>Khuyến nghị thực hành</h3>
     <ol>
-      <li>Chiến lược đa thuật toán là bắt buộc — không có thuật toán nào nhất quán tốt nhất trên
-      mọi dataset (biến động ARI lên tới 0.95 điểm trên cùng dataset Wine).</li>
-      <li>Không dùng Silhouette Score làm chỉ số lựa chọn mô hình duy nhất; nên đối chiếu đồng thời
-      Silhouette, Davies–Bouldin, Calinski–Harabász.</li>
-      <li>Điều chỉnh lựa chọn thuật toán theo số chiều dữ liệu: K-Means/GMM cho chiều thấp,
-      Agglomerative Ward/GMM Tied sau PCA cho chiều cao.</li>
-      <li>Với DBSCAN, luôn kiểm soát tỷ lệ noise — nếu vượt 20% thì không phù hợp triển khai.</li>
+      <li><strong>Chiến lược đa thuật toán là bắt buộc, không phải tùy chọn.</strong> Khoảng biến động
+      ARI giữa các phương pháp trên cùng một dataset có thể lên đến 0.95 điểm (Wine: từ −0.005
+      đến 0.946) — hệ quả trực tiếp của No Free Lunch Theorem.</li>
+      <li><strong>Không sử dụng Silhouette Score như chỉ số lựa chọn mô hình độc lập.</strong> Nên dùng
+      đồng thời cả ba chỉ số nội tại (Silhouette, Davies–Bouldin, Calinski–Harabász) và chỉ tin
+      tưởng kết luận khi cả ba đồng thuận; khi có nhãn tham chiếu, ưu tiên ARI.</li>
+      <li><strong>Điều chỉnh lựa chọn thuật toán theo số chiều dữ liệu.</strong> Chiều thấp: K-Means/GMM
+      là lựa chọn đầu tiên. Chiều trung bình: PCA giảm chiều về 95% phương sai trước khi thử
+      K-Means/GMM Tied. Chiều cao: ưu tiên Agglomerative Ward hoặc GMM Tied sau PCA; tránh
+      Complete/Average và DBSCAN.</li>
+      <li><strong>Diễn giải K*<sub>Sil</sub> ≠ K<sub>true</sub> như tín hiệu phân tích</strong>, không phải lỗi
+      phương pháp — nên phân tích cấu trúc chồng lấn qua PCA/UMAP thay vì áp đặt K=K<sub>true</sub>
+      một cách cơ học.</li>
+      <li><strong>Triển khai DBSCAN đòi hỏi kiểm soát tỷ lệ noise nghiêm ngặt</strong> — nếu vượt 20%
+      thì DBSCAN không phù hợp với dataset đó.</li>
+      <li><strong>Ưu tiên GMM Tied như lựa chọn mặc định trong họ mô hình xác suất</strong>, nhờ ràng buộc
+      tied covariance ngăn overfitting trên dữ liệu vừa và nhỏ.</li>
     </ol>
 
-    <div class="btn-row">
-      <span class="btn">Báo cáo đầy đủ &amp; slide (PDF) — liên hệ để xem chi tiết</span>
-    </div>
+    <h3>Hạn chế và hướng nghiên cứu tiếp theo</h3>
+    <p>
+      Phạm vi thực nghiệm giới hạn ở dữ liệu dạng bảng quy mô vừa và nhỏ (150–1797 mẫu); không
+      gian tìm kiếm siêu tham số (đặc biệt của DBSCAN và Spectral RBF) chưa được khám phá đầy
+      đủ; và nghiên cứu chỉ xét phân cụm trên đặc trưng thô (sau chuẩn hóa/PCA) mà chưa khám
+      phá các biểu diễn học được. Bốn hướng nghiên cứu tiếp theo được đề xuất: (1) mở rộng sang
+      deep clustering (DEC, IDEC); (2) đánh giá trên benchmark quy mô lớn hơn (STL-10, CIFAR-10,
+      MIMIC-III); (3) khám phá semi-supervised clustering với ràng buộc must-link/cannot-link;
+      (4) xây dựng framework meta-learning để tự động hóa lựa chọn thuật toán dựa trên
+      meta-features của dữ liệu đầu vào.
+    </p>
   </main>
 
   <footer class="site-footer">
-    &copy; 2026 Nguyễn Minh Hằng. Nhóm: Nguyễn Đức Anh, Nguyễn Minh Hằng, Phạm Bá Ngọc Hiển.
+    &copy; 2026 Nguyễn Minh Hằng.
   </footer>
 </div>
 </body>

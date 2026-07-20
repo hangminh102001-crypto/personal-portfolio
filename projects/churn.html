@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dự đoán Customer Churn viễn thông — Nguyễn Minh Hằng</title>
+<title>Dự đoán khách hàng rời bỏ ngành Viễn thông — Nguyễn Minh Hằng</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -12,18 +12,17 @@
     <a class="brand" href="../index.html">Nguyễn Minh Hằng</a>
     <nav class="site-nav">
       <a href="../index.html">Trang chủ</a>
-      <a href="../thesis/index.html">Thesis</a>
-      <a href="index.html" class="active">Academic Projects</a>
+      <a href="../thesis/index.html">Luận văn</a>
+      <a href="index.html" class="active">Dự án</a>
     </nav>
   </header>
 
   <main>
-    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">GROUP PROJECT — NHÓM 11</div>
-    <h1>Dự đoán Customer Churn trong ngành Viễn thông: Framework lai XGBoost + SMOTE-ENN</h1>
+    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">DỰ ÁN</div>
+    <h1>Dự đoán khách hàng rời bỏ ngành Viễn thông</h1>
     <p class="lede">
-      Nghiên cứu và triển khai lại framework lai kết hợp XGBoost với kỹ thuật resampling
-      SMOTE-ENN để cải thiện độ chính xác dự đoán khách hàng rời mạng (churn), thực hiện
-      cùng Nguyễn Đức Anh và Phạm Bá Ngọc Hiển.
+      Framework Lai XGBoost + SMOTE-ENN: giải pháp tổng thể kết hợp preprocessing,
+      resampling và ensemble learning để tối ưu hóa dự đoán customer churn.
     </p>
 
     <div class="tag-row">
@@ -34,63 +33,137 @@
       <span class="tag">Telecom Analytics</span>
     </div>
 
-    <div class="note">
-      Framework lai (XGBoost + SMOTE-ENN) và 3 bộ dữ liệu viễn thông (IBM Watson, Orange Telecom,
-      Iranian Churn) dựa trên bài báo học thuật: Ouf, S., Mahmoud, K.T. &amp; Abdel-Fattah, M.A. (2024),
-      <em>"A proposed hybrid framework to improve the accuracy of customer churn prediction in
-      telecom industry"</em>, Journal of Big Data 11:70 (CC BY 4.0). Nhóm nghiên cứu, tái hiện
-      và trình bày lại framework này như một bài tập chuyên đề.
+    <h2>Bối cảnh</h2>
+    <ul>
+      <li><strong>Khách hàng là tài sản quan trọng</strong> — trong ngành viễn thông, khách hàng là
+      tài sản chiến lược và cốt lõi quyết định sự thành công của doanh nghiệp.</li>
+      <li><strong>Churn gây thất thoát lớn</strong> — khách hàng rời bỏ gây thất thoát doanh thu và
+      ảnh hưởng trực tiếp đến lợi nhuận, đòi hỏi phải có chiến lược dự đoán sớm.</li>
+      <li><strong>ML trở thành công cụ chính</strong> — học máy đã trở thành công cụ hiệu quả để phân
+      tích hành vi và dự đoán khả năng rời bỏ của khách hàng.</li>
+    </ul>
+    <div class="tag-row">
+      <span class="tag">5–6x chi phí thu hút KH mới so với giữ chân KH hiện tại</span>
+      <span class="tag">68% khách hàng rời bỏ vì cảm thấy công ty không quan tâm đến họ</span>
     </div>
-
-    <h2>Bài toán</h2>
     <p>
-      Trong ngành viễn thông, chi phí thu hút khách hàng mới cao gấp 5–6 lần chi phí giữ chân
-      khách hàng hiện tại, nên dự đoán churn sớm và chính xác có giá trị kinh doanh trực tiếp.
-      Thách thức chính là <strong>mất cân bằng lớp</strong> (số khách hàng churn thường chiếm tỷ
-      lệ nhỏ) khiến các mô hình phân loại thông thường thiên lệch về lớp đa số.
+      Giảm tỷ lệ churn 5% có thể tăng lợi nhuận từ 25–95% tùy ngành (nghiên cứu của Bain &amp; Company).
+      Dự đoán churn sớm giúp doanh nghiệp có "thời gian vàng" để thực hiện các biện pháp giữ
+      chân hiệu quả trước khi khách hàng quyết định rời bỏ.
     </p>
 
-    <h2>Framework 3 tầng</h2>
+    <h2>Khoảng trống nghiên cứu (Research Gap)</h2>
+    <ul>
+      <li><strong>Tiền xử lý dữ liệu</strong> — nhiều nghiên cứu tập trung vào thuật toán ML nhưng thiếu
+      chú trọng đến tiền xử lý dữ liệu, yếu tố quan trọng ảnh hưởng đến hiệu suất mô hình.</li>
+      <li><strong>Dữ liệu mất cân bằng</strong> — ít nghiên cứu giải quyết triệt để vấn đề dữ liệu mất
+      cân bằng trong dự đoán churn, dẫn đến kết quả không chính xác cho lớp thiểu số.</li>
+      <li><strong>Kết hợp đa kỹ thuật</strong> — các nghiên cứu hiện tại ít tập trung vào kết hợp đa kỹ
+      thuật (hybrid approaches) để tối ưu hóa hiệu suất dự đoán churn.</li>
+      <li><strong>XGBoost + Hybrid Resampling</strong> — ít nghiên cứu kết hợp XGBoost với kỹ thuật
+      resampling lai như SMOTE-ENN để giải quyết vấn đề mất cân bằng dữ liệu.</li>
+      <li><strong>Framework tổng hợp</strong> — chưa có framework tổng hợp đồng thời cả ba yếu tố: data
+      preprocessing, ensemble learning, và resampling trong một giải pháp hoàn chỉnh.</li>
+    </ul>
+
+    <h2>Mục tiêu nghiên cứu</h2>
+    <ul>
+      <li>Xây dựng Hybrid Framework kết hợp preprocessing + SMOTE-ENN + XGBoost nhằm cải thiện
+      độ chính xác dự đoán churn và giảm misclassification.</li>
+      <li>So sánh hiệu suất mô hình trước và sau khi cân bằng dữ liệu bằng kỹ thuật hybrid resampling.</li>
+      <li>Phân tích trade-off giữa tốc độ xử lý và độ chính xác dự đoán.</li>
+      <li>Sử dụng XGBoost để xác định các đặc trưng quan trọng ảnh hưởng đến quyết định rời bỏ
+      của khách hàng trong ngành viễn thông.</li>
+      <li>So sánh hiệu suất của framework đề xuất so với các nghiên cứu trước đây trên cùng dataset.</li>
+    </ul>
+
+    <h2>Framework lai — 3 tầng</h2>
     <table>
       <thead><tr><th>Tầng</th><th>Nội dung</th></tr></thead>
       <tbody>
-        <tr><td>Data</td><td>Làm sạch dữ liệu, xử lý giá trị thiếu, chuẩn hóa (STD Scaler), feature engineering &amp; feature selection (univariate scoring)</td></tr>
-        <tr><td>Algorithm</td><td>Cân bằng lớp bằng SMOTE-ENN (kết hợp oversampling SMOTE và làm sạch nhiễu ENN), sau đó huấn luyện XGBoost ensemble</td></tr>
-        <tr><td>Evaluation</td><td>Accuracy, Precision, Recall, F1-score, ROC/AUC — so sánh trước/sau khi cân bằng dữ liệu</td></tr>
+        <tr><td><strong>1. Data Layer</strong><br>Tiền xử lý &amp; chuẩn bị dữ liệu</td>
+        <td>Làm sạch dữ liệu → EDA → Feature engineering → Feature selection (Univariate) → Chuẩn hóa (StandardScaler)</td></tr>
+        <tr><td><strong>2. Algorithm Layer</strong><br>Xử lý mất cân bằng &amp; xây dựng mô hình</td>
+        <td>SMOTE-ENN hybrid resampling → Stratified k-fold (k=10) → Mô hình chính XGBoost → Chọn hyperparameters</td></tr>
+        <tr><td><strong>3. Evaluation Layer</strong><br>Đánh giá hiệu suất mô hình</td>
+        <td>Accuracy, Precision, Recall, F1-score, ROC-AUC</td></tr>
       </tbody>
     </table>
+    <p>
+      SMOTE tạo mẫu tổng hợp cho lớp thiểu số, ENN loại bỏ nhiễu và mẫu sai — Hybrid kết hợp
+      tối ưu cả hai. Dữ liệu được chia train:test = 70:30, sử dụng Stratified k-fold (k=10)
+      cho cross-validation. XGBoost được chọn làm mô hình chính vì xử lý rất tốt dữ liệu mất
+      cân bằng, khai thác tốt dữ liệu dạng bảng với đặc trưng phi tuyến, và cho giải thích mô
+      hình rõ ràng thông qua feature importance.
+    </p>
 
-    <h2>Kết quả (theo bài báo gốc, 3 bộ dữ liệu)</h2>
+    <h2>Thiết lập thực nghiệm</h2>
+    <p>Nghiên cứu thực hiện 2 nhóm thí nghiệm để đánh giá hiệu quả của kỹ thuật resampling:</p>
+    <ul>
+      <li><strong>Thí nghiệm (a)</strong>: XGBoost + SMOTE-ENN + StandardScaler</li>
+      <li><strong>Thí nghiệm (b)</strong>: XGBoost + StandardScaler (không resampling)</li>
+    </ul>
+    <p>Tham số XGBoost: <code>max_depth=5</code>, <code>gamma=1</code>, <code>n_estimators=100</code>, <code>n_jobs=56</code>.</p>
+
+    <h2>Dataset</h2>
     <table>
-      <thead><tr><th>Dataset</th><th>Không SMOTE-ENN (Acc)</th><th>Có SMOTE-ENN (Acc)</th><th>AUC (có resampling)</th></tr></thead>
+      <thead><tr><th>Dataset</th><th>Mô tả</th><th>Số bản ghi</th><th>Tỷ lệ churn</th><th>Số thuộc tính</th></tr></thead>
       <tbody>
-        <tr><td>IBM Watson Telco</td><td>82%</td><td>98%</td><td>84%</td></tr>
-        <tr><td>Orange Telecom Churn</td><td>84%</td><td>98.25%</td><td>92%</td></tr>
-        <tr><td>Iranian Churn</td><td>84%</td><td>99.92%</td><td>99%</td></tr>
+        <tr><td>IBM Telco</td><td>Công ty viễn thông giả định ở California, Q3</td><td>7,043</td><td>26.53%</td><td>21</td></tr>
+        <tr><td>Orange Telecom</td><td>Nhà mạng Orange, thông tin chi tiết sử dụng dịch vụ</td><td>3,333</td><td>14.49%</td><td>20</td></tr>
+        <tr><td>Iranian Dataset</td><td>Nhà mạng Iran, đặc trưng sử dụng dịch vụ viễn thông</td><td>3,150</td><td>15.71%</td><td>16</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Kết quả chính</h2>
+    <table>
+      <thead><tr><th>Chỉ số</th><th>Thí nghiệm</th><th>IBM Telco</th><th>Orange</th><th>Iranian</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="2">Accuracy</td><td>(a) SMOTE-ENN</td><td>73%</td><td>91%</td><td>99%</td></tr>
+        <tr><td>(b) không resampling</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td rowspan="2">Recall</td><td>(a) SMOTE-ENN</td><td>72%</td><td>95%</td><td>95%</td></tr>
+        <tr><td>(b) không resampling</td><td>83%</td><td>83%</td><td>99%</td></tr>
+        <tr><td rowspan="2">Precision</td><td>(a) SMOTE-ENN</td><td>51%</td><td>95%</td><td>98%</td></tr>
+        <tr><td>(b) không resampling</td><td>64%</td><td>94%</td><td>89%</td></tr>
+        <tr><td rowspan="2">F1-score</td><td>(a) SMOTE-ENN</td><td>62%</td><td>95%</td><td>99%</td></tr>
+        <tr><td>(b) không resampling</td><td>59%</td><td>97%</td><td>98%</td></tr>
+        <tr><td>AUC</td><td>(a) SMOTE-ENN</td><td>84%</td><td>88%</td><td>96%</td></tr>
       </tbody>
     </table>
     <p>
-      Kết quả cho thấy cân bằng dữ liệu bằng SMOTE-ENN cải thiện đáng kể độ chính xác so với
-      chỉ chuẩn hóa dữ liệu mà bỏ qua resampling — đặc biệt trên bộ dữ liệu Iranian Churn
-      (tăng từ 84% lên 99.92%). Đặc trưng quan trọng nhất theo XGBoost feature importance
-      trên cả 3 bộ dữ liệu đều liên quan đến <strong>tổng chi phí/cước sử dụng</strong> và
-      <strong>thời gian gắn bó với nhà mạng (tenure)</strong>.
+      AUC càng gần 1, mô hình càng có khả năng phân biệt tốt giữa hai lớp — các giá trị AUC
+      cao (84–96%) chứng minh framework đề xuất có khả năng phân loại tốt trên cả 3 bộ dữ liệu.
     </p>
 
-    <h2>Vai trò trong nhóm</h2>
-    <p>
-      Công việc được chia theo bộ dữ liệu: mỗi thành viên triển khai và đánh giá pipeline
-      trên một bộ dữ liệu viễn thông riêng, sau đó tổng hợp so sánh kết quả và trình bày
-      chung trong báo cáo/slide của nhóm.
-    </p>
+    <h3>Feature quan trọng nhất theo từng dataset (XGBoost feature importance)</h3>
+    <table>
+      <thead><tr><th>Dataset</th><th>Đặc trưng quan trọng nhất</th></tr></thead>
+      <tbody>
+        <tr><td>IBM Telco</td><td>Contract Month-to-month, Internet service, Online security</td></tr>
+        <tr><td>Orange Telecom</td><td>International plan, VoiceMail, Customer service calls</td></tr>
+        <tr><td>Iranian Dataset</td><td>Status, Complains, Seconds of use</td></tr>
+      </tbody>
+    </table>
 
-    <div class="btn-row">
-      <span class="btn">Notebook &amp; slide — liên hệ để xem chi tiết</span>
-    </div>
+    <h2>Hướng nghiên cứu tiếp theo</h2>
+    <h3>Time-based Churn Prediction — Mở rộng mô hình sang chuỗi thời gian</h3>
+    <ul>
+      <li>Mô hình hiện tại chỉ xem xét dữ liệu tĩnh tại một thời điểm, trong khi hành vi khách
+      hàng thay đổi theo thời gian.</li>
+      <li>Mở rộng sang time-series hoặc sequence modeling — công nghệ tiềm năng: survival analysis, LSTM, Transformer.</li>
+      <li>Dự đoán rủi ro rời bỏ theo từng mốc thời gian, phản ánh đúng chu kỳ hành vi của khách hàng.</li>
+    </ul>
+    <h3>Realtime Monitoring &amp; Early Warning — Hệ thống cảnh báo sớm</h3>
+    <ul>
+      <li>Hệ thống giám sát thời gian thực, tự động cập nhật dữ liệu mới phát sinh.</li>
+      <li>Tính toán lại xác suất churn theo chu kỳ ngắn (hàng giờ/hàng ngày).</li>
+      <li>Phát hiện sớm các tín hiệu bất thường, đưa ra cảnh báo rủi ro kịp thời và kích hoạt
+      chiến dịch retention ngay khi dấu hiệu churn xuất hiện.</li>
+    </ul>
   </main>
 
   <footer class="site-footer">
-    &copy; 2026 Nguyễn Minh Hằng. Nhóm: Nguyễn Đức Anh, Phạm Bá Ngọc Hiển, Nguyễn Thị Minh Hằng.
+    &copy; 2026 Nguyễn Minh Hằng.
   </footer>
 </div>
 </body>
