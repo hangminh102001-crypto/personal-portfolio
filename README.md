@@ -1,11 +1,16 @@
 # Personal Data Portfolio
 
-Portfolio cá nhân trong lĩnh vực Khoa học Dữ liệu — tổng hợp luận văn thạc sĩ và các
-bài tập nghiên cứu học thuật.
+Personal portfolio in Data Science — a master's thesis and applied research projects.
 
-- `index.html` — trang chủ
-- `thesis/` — luận văn thạc sĩ (phát hiện gian lận kế toán bằng Deep Autoencoder)
-- `projects/` — bài tập nhóm (phân cụm dữ liệu, dự đoán customer churn)
-- `assets/` — CSS và hình ảnh minh họa
+Live site: **https://hangminh102001-crypto.github.io/personal-portfolio/**
 
-Xem trực tiếp tại: https://hangminh102001-crypto.github.io/personal-portfolio/
+## Contents
+
+- `index.html` — home page
+- `thesis/` — master's thesis (accounting fraud detection with a Deep Autoencoder)
+- `projects/` — applied projects (clustering algorithm evaluation, telecom customer churn prediction)
+- `assets/` — CSS, images, and the OG/social preview banner
+
+## Stack
+
+Plain HTML/CSS, no build step, deployed via GitHub Pages.
