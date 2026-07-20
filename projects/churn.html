@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dự đoán Customer Churn viễn thông — Nguyễn Minh Hằng</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="site-header">
+    <a class="brand" href="../index.html">Nguyễn Minh Hằng</a>
+    <nav class="site-nav">
+      <a href="../index.html">Trang chủ</a>
+      <a href="../thesis/index.html">Thesis</a>
+      <a href="index.html" class="active">Academic Projects</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">GROUP PROJECT — NHÓM 11</div>
+    <h1>Dự đoán Customer Churn trong ngành Viễn thông: Framework lai XGBoost + SMOTE-ENN</h1>
+    <p class="lede">
+      Nghiên cứu và triển khai lại framework lai kết hợp XGBoost với kỹ thuật resampling
+      SMOTE-ENN để cải thiện độ chính xác dự đoán khách hàng rời mạng (churn), thực hiện
+      cùng Nguyễn Đức Anh và Phạm Bá Ngọc Hiển.
+    </p>
+
+    <div class="tag-row">
+      <span class="tag">XGBoost</span>
+      <span class="tag">SMOTE-ENN</span>
+      <span class="tag">Imbalanced Learning</span>
+      <span class="tag">Feature Selection</span>
+      <span class="tag">Telecom Analytics</span>
+    </div>
+
+    <div class="note">
+      Framework lai (XGBoost + SMOTE-ENN) và 3 bộ dữ liệu viễn thông (IBM Watson, Orange Telecom,
+      Iranian Churn) dựa trên bài báo học thuật: Ouf, S., Mahmoud, K.T. &amp; Abdel-Fattah, M.A. (2024),
+      <em>"A proposed hybrid framework to improve the accuracy of customer churn prediction in
+      telecom industry"</em>, Journal of Big Data 11:70 (CC BY 4.0). Nhóm nghiên cứu, tái hiện
+      và trình bày lại framework này như một bài tập chuyên đề.
+    </div>
+
+    <h2>Bài toán</h2>
+    <p>
+      Trong ngành viễn thông, chi phí thu hút khách hàng mới cao gấp 5–6 lần chi phí giữ chân
+      khách hàng hiện tại, nên dự đoán churn sớm và chính xác có giá trị kinh doanh trực tiếp.
+      Thách thức chính là <strong>mất cân bằng lớp</strong> (số khách hàng churn thường chiếm tỷ
+      lệ nhỏ) khiến các mô hình phân loại thông thường thiên lệch về lớp đa số.
+    </p>
+
+    <h2>Framework 3 tầng</h2>
+    <table>
+      <thead><tr><th>Tầng</th><th>Nội dung</th></tr></thead>
+      <tbody>
+        <tr><td>Data</td><td>Làm sạch dữ liệu, xử lý giá trị thiếu, chuẩn hóa (STD Scaler), feature engineering &amp; feature selection (univariate scoring)</td></tr>
+        <tr><td>Algorithm</td><td>Cân bằng lớp bằng SMOTE-ENN (kết hợp oversampling SMOTE và làm sạch nhiễu ENN), sau đó huấn luyện XGBoost ensemble</td></tr>
+        <tr><td>Evaluation</td><td>Accuracy, Precision, Recall, F1-score, ROC/AUC — so sánh trước/sau khi cân bằng dữ liệu</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Kết quả (theo bài báo gốc, 3 bộ dữ liệu)</h2>
+    <table>
+      <thead><tr><th>Dataset</th><th>Không SMOTE-ENN (Acc)</th><th>Có SMOTE-ENN (Acc)</th><th>AUC (có resampling)</th></tr></thead>
+      <tbody>
+        <tr><td>IBM Watson Telco</td><td>82%</td><td>98%</td><td>84%</td></tr>
+        <tr><td>Orange Telecom Churn</td><td>84%</td><td>98.25%</td><td>92%</td></tr>
+        <tr><td>Iranian Churn</td><td>84%</td><td>99.92%</td><td>99%</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Kết quả cho thấy cân bằng dữ liệu bằng SMOTE-ENN cải thiện đáng kể độ chính xác so với
+      chỉ chuẩn hóa dữ liệu mà bỏ qua resampling — đặc biệt trên bộ dữ liệu Iranian Churn
+      (tăng từ 84% lên 99.92%). Đặc trưng quan trọng nhất theo XGBoost feature importance
+      trên cả 3 bộ dữ liệu đều liên quan đến <strong>tổng chi phí/cước sử dụng</strong> và
+      <strong>thời gian gắn bó với nhà mạng (tenure)</strong>.
+    </p>
+
+    <h2>Vai trò trong nhóm</h2>
+    <p>
+      Công việc được chia theo bộ dữ liệu: mỗi thành viên triển khai và đánh giá pipeline
+      trên một bộ dữ liệu viễn thông riêng, sau đó tổng hợp so sánh kết quả và trình bày
+      chung trong báo cáo/slide của nhóm.
+    </p>
+
+    <div class="btn-row">
+      <span class="btn">Notebook &amp; slide — liên hệ để xem chi tiết</span>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    &copy; 2026 Nguyễn Minh Hằng. Nhóm: Nguyễn Đức Anh, Phạm Bá Ngọc Hiển, Nguyễn Thị Minh Hằng.
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thesis — Phát hiện gian lận kế toán bằng Deep Autoencoder</title>
+<meta name="description" content="Luận văn thạc sĩ: Ứng dụng Machine Learning phát hiện bất thường kế toán - tài chính, framework 4 tầng tuân thủ chuẩn mực Việt Nam.">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="site-header">
+    <a class="brand" href="../index.html">Nguyễn Minh Hằng</a>
+    <nav class="site-nav">
+      <a href="../index.html">Trang chủ</a>
+      <a href="index.html" class="active">Thesis</a>
+      <a href="../projects/index.html">Academic Projects</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">MASTER THESIS — KHOA HỌC DỮ LIỆU</div>
+    <h1>Ứng dụng Machine Learning phát hiện gian lận trong kế toán – tài chính</h1>
+    <p class="lede">
+      Xây dựng một framework phát hiện bất thường kế toán không giám sát gồm 4 tầng,
+      kết hợp Isolation Forest, LOF, Deep Autoencoder và giải thích bằng SHAP — áp dụng
+      trên dữ liệu sổ cái (General Ledger) thực tế của một doanh nghiệp FDI tại Việt Nam,
+      đồng thời tuân thủ các chuẩn mực kế toán/kiểm toán hiện hành (TT200/2014, VSA 240, VSA 530).
+    </p>
+
+    <div class="tag-row">
+      <span class="tag">Unsupervised Anomaly Detection</span>
+      <span class="tag">Deep Autoencoder</span>
+      <span class="tag">Isolation Forest / LOF</span>
+      <span class="tag">SHAP Explainability</span>
+      <span class="tag">Audit &amp; Compliance</span>
+    </div>
+
+    <div class="note">
+      Dữ liệu sử dụng trong nghiên cứu (4.218 bút toán, giai đoạn 07–11/2022) đã được doanh
+      nghiệp ẩn danh hóa không thể đảo ngược trước khi bàn giao cho mục đích học thuật.
+      Các số liệu minh họa trên trang này chỉ mang tính thống kê tổng hợp, không chứa
+      thông tin định danh tổ chức/cá nhân.
+    </div>
+
+    <h2>Bối cảnh &amp; vấn đề</h2>
+    <p>
+      Sự phổ biến của hệ thống ERP tại doanh nghiệp Việt Nam (~85% doanh nghiệp FDI theo VCCI 2023)
+      tạo ra khối lượng bút toán kế toán vượt xa khả năng kiểm tra thủ công, trong khi gian lận kế
+      toán ngày càng tinh vi (ACFE 2022 ước tính tổ chức điển hình mất ~5% doanh thu/năm vì gian lận).
+      Các phương pháp truyền thống — Benford's Law, red-flag rules, lấy mẫu thống kê ISA 530 — chỉ
+      phát hiện được các kịch bản gian lận đã biết trước và không xử lý hiệu quả ở quy mô dữ liệu lớn.
+    </p>
+    <p>
+      Điểm mấu chốt: các framework Deep Autoencoder đã được chứng minh hiệu quả trên dữ liệu ERP
+      quốc tế (chuẩn IFRS/US-GAAP), nhưng <strong>chưa có nghiên cứu nào tích hợp cấu trúc tài khoản
+      TT200/2014, ngưỡng pháp lý backdating, và yêu cầu kiểm toán nội bộ theo Nghị định 05/2019/NĐ-CP
+      của Việt Nam</strong> vào một pipeline Machine Learning hoàn chỉnh.
+    </p>
+
+    <h2>Phương pháp — Pipeline 4 tầng</h2>
+    <table>
+      <thead><tr><th>Tầng</th><th>Kỹ thuật</th><th>Mục tiêu</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Isolation Forest (n=300) + LOF (k=35)</td><td>Sàng lọc bất thường sơ bộ dựa trên mật độ &amp; phân vùng</td></tr>
+        <tr><td>2</td><td>Benford Chi-square + 4 Red Flag Rules</td><td>Áp dụng ngưỡng pháp lý Việt Nam (TT200 Điều 10 backdating...)</td></tr>
+        <tr><td>3</td><td>Deep Autoencoder (Huber Loss δ=1.0) + Iterative Refinement</td><td>Học biểu diễn tái tạo, loại nhiễu khỏi tập huấn luyện lặp lại</td></tr>
+        <tr><td>4</td><td>Anomaly Score (AP+RE+AS, α=0.6) + SHAP TreeExplainer</td><td>Chấm điểm bất thường tổng hợp &amp; giải thích theo top-5 đặc trưng</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Bút toán được phân loại theo 4 nhãn bất thường (typology của Schreyer et al.): <code>GLOBAL</code>
+      (giá trị thuộc tính hiếm gặp), <code>LOCAL</code> (tổ hợp thuộc tính bất thường), <code>BOTH</code>,
+      và <code>NORMAL</code>. Vì bài toán không có nhãn gian lận xác nhận (ground truth), mô hình được
+      đánh giá bằng proxy metrics: precision@k, contamination rate, và độ nhất quán của SHAP feature
+      importance — thay vì AUC/F1 truyền thống.
+    </p>
+
+    <h2>Một số kết quả minh họa</h2>
+
+    <figure>
+      <img src="../assets/img/thesis-eda.png" alt="Phân phối log(số tiền) và tổng phát sinh theo tháng">
+      <figcaption>Phân tích khám phá dữ liệu (EDA): phân phối số tiền lệch phải mạnh (heavy-tailed)
+      và biến động phát sinh bút toán theo tháng.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="../assets/img/thesis-benford.png" alt="Kiểm định Benford's Law trên chữ số đầu tiên">
+      <figcaption>Kiểm định Benford's Law (χ²=101.7, p&lt;0.001) — phát hiện lệch chuẩn có ý nghĩa
+      thống kê so với phân phối kỳ vọng, làm cơ sở cho Tầng 2 của pipeline.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="../assets/img/thesis-shap-bar.png" alt="SHAP feature importance của mô hình Autoencoder">
+      <figcaption>Top đặc trưng ảnh hưởng nhất đến điểm bất thường của Autoencoder, theo SHAP —
+      chủ yếu là độ lệch chuẩn số tiền so với tài khoản/đối tác và mức độ hiếm gặp của đối tác giao dịch.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="../assets/img/thesis-shap-beeswarm.png" alt="SHAP beeswarm plot">
+      <figcaption>SHAP beeswarm: chiều tác động (tăng/giảm điểm bất thường) của từng đặc trưng
+      trên toàn bộ tập bút toán được gắn cờ.</figcaption>
+    </figure>
+
+    <h2>Đóng góp chính</h2>
+    <ul>
+      <li>Áp dụng lần đầu framework Deep Autoencoder (Schreyer et al., 2017/2018) trên dữ liệu kế toán
+      theo cấu trúc Thông tư 200/2014/TT-BTC, có hiệu chỉnh (Huber Loss, LOF k=35, Iterative Refinement).</li>
+      <li>Tích hợp trực tiếp ngưỡng pháp lý Việt Nam: backdating theo TT200 Điều 10, phân loại 9 nhóm
+      tài khoản, cỡ mẫu ISA 530 (n≥200) vào pipeline.</li>
+      <li>Xây dựng "Flag Card" tiếng Việt tích hợp SHAP explainability — hỗ trợ kiểm toán viên nội bộ
+      diễn giải từng cảnh báo theo Nghị định 05/2019/NĐ-CP.</li>
+      <li>Đề xuất quy trình CAATs 5 bước tích hợp kết quả Machine Learning vào kiểm toán nội bộ.</li>
+    </ul>
+
+    <h2>Công cụ</h2>
+    <div class="tag-row">
+      <span class="tag">Python 3.10</span>
+      <span class="tag">scikit-learn</span>
+      <span class="tag">PyTorch</span>
+      <span class="tag">SHAP</span>
+      <span class="tag">Jupyter Notebook</span>
+    </div>
+
+    <div class="note">
+      Cơ sở lý thuyết chính dựa trên: Schreyer et al. (2017/2018, arXiv:1709.05254) —
+      Detection of Anomalies in Large-Scale Accounting Data using Deep Autoencoder Networks,
+      và các mở rộng liên quan (Adversarial Autoencoder 2019, Graph Neural Network Auditing 2026).
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    &copy; 2026 Nguyễn Minh Hằng.
+  </footer>
+</div>
+</body>
+</html>

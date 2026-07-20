@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đánh giá thực nghiệm 8 thuật toán phân cụm — Nguyễn Minh Hằng</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="site-header">
+    <a class="brand" href="../index.html">Nguyễn Minh Hằng</a>
+    <nav class="site-nav">
+      <a href="../index.html">Trang chủ</a>
+      <a href="../thesis/index.html">Thesis</a>
+      <a href="index.html" class="active">Academic Projects</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">GROUP PROJECT — NHÓM 02</div>
+    <h1>Nghiên cứu các thuật toán phân cụm dữ liệu và đánh giá thực nghiệm</h1>
+    <p class="lede">
+      Đánh giá thực nghiệm có hệ thống 8 phương pháp phân cụm tiêu biểu trên 4 bộ dữ liệu chuẩn,
+      thực hiện cùng Nguyễn Đức Anh và Phạm Bá Ngọc Hiển.
+    </p>
+
+    <div class="tag-row">
+      <span class="tag">K-Means</span>
+      <span class="tag">Agglomerative Clustering</span>
+      <span class="tag">Gaussian Mixture Model</span>
+      <span class="tag">Spectral Clustering</span>
+      <span class="tag">DBSCAN</span>
+      <span class="tag">PCA / t-SNE / UMAP</span>
+    </div>
+
+    <h2>Mục tiêu &amp; phương pháp</h2>
+    <p>
+      Nghiên cứu tuân thủ nghiêm ngặt nguyên tắc không giám sát: nhãn được niêm phong hoàn toàn
+      trong suốt các bước tiền xử lý, giảm chiều, huấn luyện và lựa chọn siêu tham số — chỉ được
+      mở ra một lần duy nhất ở bước đánh giá ngoại tại cuối cùng, nhằm mô phỏng đúng điều kiện
+      triển khai thực tế nơi nhãn thường không có sẵn.
+    </p>
+    <p>
+      Pipeline thực nghiệm 7 bước được áp dụng đồng nhất cho 8 thuật toán
+      (K-Means, Agglomerative Ward/Complete/Average, GMM Full/Tied, Spectral RBF, DBSCAN)
+      trên 4 bộ dữ liệu: Iris, Wine, Breast Cancer Wisconsin, Digits. Số cụm K được chọn
+      không giám sát bằng chiến lược <strong>Silhouette-Optimum</strong>, sau đó đối chiếu với
+      số nhóm thực (K<sub>true</sub>).
+    </p>
+
+    <h2>Kết quả chính</h2>
+    <table>
+      <thead><tr><th>Dataset</th><th>K<sub>Sil</sub></th><th>K<sub>true</sub></th><th>Khớp?</th><th>Best Method</th><th>Best ARI</th><th>Best ACC</th></tr></thead>
+      <tbody>
+        <tr><td>Iris</td><td>2</td><td>3</td><td>✗</td><td>DBSCAN</td><td>0.631</td><td>0.724</td></tr>
+        <tr><td>Wine</td><td>3</td><td>3</td><td>✓</td><td>GMM Tied</td><td>0.946</td><td>0.983</td></tr>
+        <tr><td>Breast Cancer</td><td>2</td><td>2</td><td>✓</td><td>GMM Full</td><td>0.774</td><td>0.940</td></tr>
+        <tr><td>Digits</td><td>10</td><td>10</td><td>✓</td><td>Agglo. Ward*</td><td>0.664</td><td>0.745</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.85rem;color:var(--text-muted)">*DBSCAN đạt ARI=1.0 trên Digits nhưng loại bỏ 96% mẫu là noise — không thực tế để triển khai.</p>
+
+    <h3>Phát hiện nổi bật</h3>
+    <ul>
+      <li><strong>Silhouette-Optimum đạt độ chính xác 75%</strong> trong việc phục hồi số cụm thực
+      (khớp trên Wine, Breast Cancer, Digits — kể cả không gian 64 chiều của Digits).</li>
+      <li><strong>Tương quan Silhouette–ARI không ổn định</strong>: từ +0.992 (Iris) đến −0.928
+      (Breast Cancer) — nghĩa là chỉ số nội tại đôi khi xếp hạng thuật toán theo chiều
+      <em>ngược lại</em> so với chất lượng thực sự. Đây là cảnh báo quan trọng khi áp dụng
+      clustering vào các bài toán có ngữ nghĩa rõ ràng (y tế, tài chính).</li>
+      <li><strong>GMM Tied</strong> đạt ARI trung bình cao nhất qua 4 dataset (0.687) nhờ ràng buộc
+      hiệp phương sai chung hoạt động như regularization, ổn định hơn GMM Full trên dữ liệu nhỏ.</li>
+      <li><strong>Agglomerative Complete/Average thất bại có hệ thống</strong> trên dữ liệu nhiều chiều
+      (ARI ≈ 0) do hiện tượng chaining effect.</li>
+    </ul>
+
+    <h2>Khuyến nghị thực hành rút ra</h2>
+    <ol>
+      <li>Chiến lược đa thuật toán là bắt buộc — không có thuật toán nào nhất quán tốt nhất trên
+      mọi dataset (biến động ARI lên tới 0.95 điểm trên cùng dataset Wine).</li>
+      <li>Không dùng Silhouette Score làm chỉ số lựa chọn mô hình duy nhất; nên đối chiếu đồng thời
+      Silhouette, Davies–Bouldin, Calinski–Harabász.</li>
+      <li>Điều chỉnh lựa chọn thuật toán theo số chiều dữ liệu: K-Means/GMM cho chiều thấp,
+      Agglomerative Ward/GMM Tied sau PCA cho chiều cao.</li>
+      <li>Với DBSCAN, luôn kiểm soát tỷ lệ noise — nếu vượt 20% thì không phù hợp triển khai.</li>
+    </ol>
+
+    <div class="btn-row">
+      <span class="btn">Báo cáo đầy đủ &amp; slide (PDF) — liên hệ để xem chi tiết</span>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    &copy; 2026 Nguyễn Minh Hằng. Nhóm: Nguyễn Đức Anh, Nguyễn Minh Hằng, Phạm Bá Ngọc Hiển.
+  </footer>
+</div>
+</body>
+</html>
