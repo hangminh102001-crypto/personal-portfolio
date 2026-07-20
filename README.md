@@ -1,6 +1,6 @@
 # Personal Data Portfolio
 
-Personal portfolio in Data Science — a master's thesis and applied research projects.
+Personal portfolio in Data Science — a master's thesis.
 
 Live site: **https://hangminh102001-crypto.github.io/personal-portfolio/**
 
