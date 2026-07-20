@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Study of Clustering Algorithms — Nguyễn Minh Hằng</title>
+<link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="site-header">
+    <a class="brand" href="../index.html">Nguyễn Minh Hằng</a>
+    <nav class="site-nav">
+      <a href="../index.html">Home</a>
+      <a href="../thesis/index.html">Thesis</a>
+      <a href="index.html" class="active">Projects</a>
+      <span class="lang-switch"><a href="../../projects/clustering.html">VI</a></span>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">PROJECT</div>
+    <h1>A Study of Clustering Algorithms with Experimental Evaluation on Several Datasets</h1>
+    <p class="lede">
+      A systematic experimental evaluation of eight representative clustering methods —
+      K-Means, Agglomerative Clustering (Ward, Complete, Average), Gaussian Mixture Model
+      (Full, Tied), Spectral Clustering (RBF), and DBSCAN — across four standard datasets:
+      Iris, Wine, Breast Cancer Wisconsin, and Digits.
+    </p>
+
+    <div class="tag-row">
+      <span class="tag">K-Means</span>
+      <span class="tag">Agglomerative Clustering</span>
+      <span class="tag">Gaussian Mixture Model</span>
+      <span class="tag">Spectral Clustering</span>
+      <span class="tag">DBSCAN</span>
+      <span class="tag">PCA / t-SNE / UMAP</span>
+    </div>
+
+    <h2>Introduction</h2>
+    <p>
+      In the age of digital transformation, data has become one of the most important resources
+      for organizations, businesses, and scientific research. The rapid growth of information
+      systems, sensors, and digital platforms has produced enormous volumes of data in many
+      different forms. However, most data collected in practice comes without clear labels or
+      classification information, making knowledge extraction a major challenge. In this
+      context, unsupervised learning methods play a key role in uncovering the hidden structure
+      of data and supporting data-driven analysis and decision-making.
+    </p>
+    <p>
+      Clustering is one of the most fundamental and widely used problems in unsupervised
+      learning. Its goal is to group data objects with similar characteristics into the same
+      cluster while ensuring clear separation between different clusters. Unlike supervised
+      classification, clustering does not require the input data to be pre-labeled.
+    </p>
+    <p>
+      Motivated by these needs, this report systematically studies the theoretical foundations
+      and experimental workflow of clustering on tabular data. The content is organized as a
+      complete data-analysis pipeline: preprocessing, dimensionality reduction, model building,
+      result visualization, and performance evaluation. Through experiments on well-known
+      benchmark datasets — Iris, Wine, Digits, and Breast Cancer — the report aims to clarify
+      the mechanics, characteristics, and applicability of each clustering method across
+      different data contexts.
+    </p>
+
+    <h2>Experimental Design</h2>
+    <p>
+      The study strictly follows the <strong>unsupervised principle</strong>: labels are kept
+      completely sealed throughout preprocessing, dimensionality reduction, training, and
+      hyperparameter selection, and are only revealed once, at the final extrinsic evaluation
+      stage — mirroring real deployment conditions where labels are usually unavailable or
+      prohibitively expensive to collect. The number of clusters K is chosen using the
+      <strong>Silhouette-Optimum</strong> strategy (K* = argmax<sub>K∈{2,...,14}</sub> Sil(K)),
+      then compared against the true number of groups K<sub>true</sub>.
+    </p>
+
+    <h2>Best Results Summary Across 4 Datasets</h2>
+    <table>
+      <thead><tr><th>Dataset</th><th>K<sub>Sil</sub></th><th>K<sub>true</sub></th><th>Match?</th><th>Best Method</th><th>Best ARI</th><th>Best ACC</th></tr></thead>
+      <tbody>
+        <tr><td>Iris</td><td>2</td><td>3</td><td>✗</td><td>DBSCAN</td><td>0.631</td><td>0.724</td></tr>
+        <tr><td>Wine</td><td>3</td><td>3</td><td>✓</td><td>GMM Tied</td><td>0.946</td><td>0.983</td></tr>
+        <tr><td>Breast Cancer</td><td>2</td><td>2</td><td>✓</td><td>GMM Full</td><td>0.774</td><td>0.940</td></tr>
+        <tr><td>Digits</td><td>10</td><td>10</td><td>✓</td><td>Agglo. Ward*</td><td>0.664</td><td>0.745</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.85rem;color:var(--text-muted)">*DBSCAN reaches ARI=1.0 on Digits but discards 96% of samples as noise — not practical for deployment.</p>
+
+    <h3>Mean ARI Ranking by Method (excluding DBSCAN-Digits)</h3>
+    <table>
+      <thead><tr><th>Method</th><th>Iris</th><th>Wine</th><th>BC</th><th>Digits</th><th>Mean ARI</th></tr></thead>
+      <tbody>
+        <tr><td>GMM Tied</td><td>#2</td><td>#1</td><td>#2</td><td>#3</td><td>0.687</td></tr>
+        <tr><td>KMeans</td><td>#2</td><td>#3</td><td>#3</td><td>#3</td><td>0.664</td></tr>
+        <tr><td>GMM Full</td><td>#2</td><td>#4</td><td>#1</td><td>#5</td><td>0.646</td></tr>
+        <tr><td>Agglo. Ward</td><td>#3</td><td>#5</td><td>#4</td><td>#1</td><td>0.643</td></tr>
+        <tr><td>DBSCAN</td><td>#1</td><td>#2</td><td>#5</td><td>#1*</td><td>0.657</td></tr>
+        <tr><td>Spectral RBF</td><td>#2</td><td>#7</td><td>#6</td><td>#8</td><td>0.255</td></tr>
+        <tr><td>Agglo. Complete</td><td>#4</td><td>#6</td><td>#6</td><td>#6</td><td>0.248</td></tr>
+        <tr><td>Agglo. Average</td><td>#2</td><td>#8</td><td>#7</td><td>#7</td><td>0.143</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Conclusion</h2>
+    <p>
+      This study presents a systematic experimental evaluation of eight representative
+      clustering methods — K-Means, Agglomerative Clustering (Ward, Complete, Average),
+      Gaussian Mixture Model (Full, Tied), Spectral Clustering (RBF), and DBSCAN — across
+      four benchmark datasets widely used in the machine learning community: Iris, Wine,
+      Breast Cancer Wisconsin, and Digits. The entire workflow follows a unified seven-step
+      pipeline, strictly observing the unsupervised principle. This approach ensures objectivity
+      and a fair comparison across methods, while reflecting real deployment conditions where
+      labels are usually unavailable or prohibitively expensive to collect.
+    </p>
+
+    <h3>Accuracy of Silhouette-Optimum in Selecting K</h3>
+    <p>
+      The results show this method achieves <strong>75% accuracy</strong>: K*<sub>Sil</sub> =
+      K<sub>true</sub> on Wine (K=3), Breast Cancer (K=2), and Digits (K=10), with a single
+      mismatch on Iris (K*<sub>Sil</sub>=2 vs. K<sub>true</sub>=3). The most notable case is
+      Digits: in a 64-dimensional space with 10 target classes, Silhouette-Optimum still
+      correctly recovers K*=10 — a non-trivial result, since the curse of dimensionality
+      typically flattens distance structure in high-dimensional spaces. The Iris case is not a
+      methodological failure: Iris is widely documented in the literature for the significant
+      overlap between the Iris versicolor and Iris virginica species, so Silhouette-Optimum is
+      faithfully reflecting the data's geometric structure rather than making an error.
+    </p>
+
+    <h3>The Breakdown Between Intrinsic and Extrinsic Evaluation</h3>
+    <p>
+      The central and most methodologically significant finding of this study is that the
+      correlation between the Silhouette Score and the Adjusted Rand Index is not constant —
+      it varies sharply with each dataset's geometric properties, including cases of strong
+      negative correlation, where the intrinsic metric ranks algorithms in the <em>opposite</em>
+      direction from their true quality.
+    </p>
+    <table>
+      <thead><tr><th>Dataset</th><th>ρ(Sil, ARI)</th><th>Best<sub>Sil</sub> = Best<sub>ARI</sub>?</th><th>Remark</th></tr></thead>
+      <tbody>
+        <tr><td>Iris</td><td>+0.992</td><td>✓ (DBSCAN)</td><td>Very high correlation, the metric is reliable</td></tr>
+        <tr><td>Wine</td><td>+0.757</td><td>✗ (Sil: DBSCAN / ARI: GMM Tied)</td><td>Fairly good correlation, minor discrepancy</td></tr>
+        <tr><td>Breast Cancer</td><td>−0.928</td><td>✗ (completely reversed!)</td><td>Dangerous — the metric is misleading</td></tr>
+        <tr><td>Digits</td><td>−0.228</td><td>✗ (almost independent)</td><td>No correlation in this 10-class problem</td></tr>
+      </tbody>
+    </table>
+    <p>
+      The most severe case is Breast Cancer (ρ=−0.928): Agglomerative Complete and Spectral RBF
+      achieve the highest Silhouette scores (0.661) but ARI ≈ 0 — these two methods find compact,
+      tight clusters that do not correspond at all to the clinical boundary between malignant and
+      benign cells. This result carries a serious methodological implication: in problems with a
+      clear applied semantic — healthcare, molecular biology, finance, customer segmentation —
+      using the Silhouette Score as the sole model-selection metric
+      <strong>can lead to choosing the wrong algorithm, with serious real-world consequences</strong>.
+    </p>
+
+    <h3>Performance Comparison Across Algorithm Families</h3>
+    <ul>
+      <li><strong>K-Means</strong>: stable, consistent performance (ARI 0.534–0.898), the fastest
+      compute time; its spherical-cluster assumption is not a serious limitation when the data's
+      structure fits.</li>
+      <li><strong>Agglomerative Ward</strong>: stands out most in high-dimensional space — on
+      Digits (64D) it reaches ARI=0.664, clearly outperforming K-Means, GMM Full, and Spectral
+      RBF, despite having the lowest Silhouette score.</li>
+      <li><strong>Agglomerative Complete/Average</strong>: fail systematically on
+      high-dimensional data (ARI≈0 on Digits) due to the chaining effect.</li>
+      <li><strong>GMM Tied</strong> achieves the highest ARI on Wine (0.946, only 3/178 samples
+      misclassified) and the highest overall mean ARI — the tied covariance constraint acts as
+      effective regularization.</li>
+      <li><strong>DBSCAN</strong>: shows sharply binary behavior depending on dimensionality —
+      strong on Iris/Wine (low dimensionality, with outliers) but on Wine it must discard 65.7%
+      of samples as noise to reach a high ARI; on Digits it discards up to 96.3% of samples,
+      making the ARI=1.0 result nothing more than a statistical artifact.</li>
+      <li><strong>Spectral RBF</strong>: never achieves competitive performance on any dataset
+      (mean ARI 0.255) — the RBF kernel with a fixed bandwidth isn't flexible enough in
+      high-dimensional spaces.</li>
+    </ul>
+
+    <h3>Practical Recommendations</h3>
+    <ol>
+      <li><strong>A multi-algorithm strategy is mandatory, not optional.</strong> ARI can swing
+      by up to 0.95 points between methods on the same dataset (Wine: from −0.005 to 0.946) —
+      a direct consequence of the No Free Lunch Theorem.</li>
+      <li><strong>Don't use the Silhouette Score as a standalone model-selection metric.</strong>
+      Use all three intrinsic metrics together (Silhouette, Davies–Bouldin, Calinski–Harabász)
+      and only trust a conclusion when all three agree; when reference labels are available,
+      prioritize ARI.</li>
+      <li><strong>Adapt algorithm choice to data dimensionality.</strong> Low dimensionality:
+      K-Means/GMM are the first choice. Medium dimensionality: reduce with PCA to 95% explained
+      variance before trying K-Means/GMM Tied. High dimensionality: prefer Agglomerative Ward or
+      GMM Tied after PCA; avoid Complete/Average and DBSCAN.</li>
+      <li><strong>Read K*<sub>Sil</sub> ≠ K<sub>true</sub> as an analytical signal</strong>, not a
+      methodological error — investigate overlapping structure via PCA/UMAP rather than
+      mechanically forcing K=K<sub>true</sub>.</li>
+      <li><strong>Deploying DBSCAN requires strict noise-ratio control</strong> — if it exceeds
+      20%, DBSCAN is not a good fit for that dataset.</li>
+      <li><strong>Prefer GMM Tied as the default choice among probabilistic models</strong>,
+      thanks to the tied covariance constraint that prevents overfitting on small-to-medium
+      datasets.</li>
+    </ol>
+
+    <h3>Limitations &amp; Future Work</h3>
+    <p>
+      The experimental scope is limited to small-to-medium tabular datasets (150–1,797 samples);
+      the hyperparameter search space (particularly for DBSCAN and Spectral RBF) was not fully
+      explored; and the study only considers clustering on raw features (after scaling/PCA)
+      without exploring learned representations. Four directions for future research are
+      proposed: (1) extending to modern deep clustering methods (DEC, IDEC); (2) evaluating on
+      larger-scale benchmarks (STL-10, CIFAR-10, MIMIC-III); (3) exploring semi-supervised
+      clustering with must-link/cannot-link constraints; (4) building a meta-learning framework
+      to automate algorithm selection based on the input data's meta-features.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    &copy; 2026 Nguyễn Minh Hằng.
+  </footer>
+</div>
+</body>
+</html>
