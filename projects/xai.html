@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explainable NLP for Vietnamese Sentiment Classification — Hang T. M. Nguyen</title>
+<meta name="description" content="Evaluating and explaining a Vietnamese sentiment model with LIME, SHAP, Attention Visualization, and Saliency Map.">
+<meta name="theme-color" content="#2a6b4a">
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+<meta property="og:title" content="Explainable NLP for Vietnamese Sentiment Classification — Hang T. M. Nguyen">
+<meta property="og:description" content="Evaluating and explaining a Vietnamese sentiment model with LIME, SHAP, Attention Visualization, and Saliency Map.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://hangminh102001-crypto.github.io/personal-portfolio/assets/img/og-image.png">
+<meta property="og:image:secure_url" content="https://hangminh102001-crypto.github.io/personal-portfolio/assets/img/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://hangminh102001-crypto.github.io/personal-portfolio/projects/xai.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="site-header">
+    <a class="brand" href="../index.html">Hang T. M. Nguyen</a>
+    <nav class="site-nav">
+      <a href="../index.html">Home</a>
+      <a href="../thesis/index.html">Thesis</a>
+      <a href="index.html" class="active">Projects</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card-eyebrow" style="color:var(--accent);font-weight:700;">PROJECT</div>
+    <h1>Evaluating and Explaining Vietnamese NLP Models (Explainable NLP)</h1>
+    <div class="tag-row" style="margin-top:0;">
+      <span class="tag">Team project — completed collaboratively</span>
+    </div>
+    <p class="lede">
+      Applying and comparing four explainability methods — LIME, SHAP, Attention
+      Visualization, and Saliency Map — on a fine-tuned PhoBERT sentiment classifier,
+      to assess how trustworthy the model's predictions really are on Vietnamese text.
+    </p>
+
+    <div class="tag-row">
+      <span class="tag">PhoBERT</span>
+      <span class="tag">LIME</span>
+      <span class="tag">SHAP</span>
+      <span class="tag">Attention Visualization</span>
+      <span class="tag">Saliency Map</span>
+      <span class="tag">Explainable AI</span>
+    </div>
+
+    <h2>Motivation</h2>
+    <p>
+      Transformer-based models such as BERT, GPT, and PhoBERT have pushed Vietnamese
+      NLP to new levels of accuracy on tasks like text classification, sentiment
+      analysis, and question answering. But this performance comes at a cost: these
+      models operate as "black boxes" — they produce high-confidence predictions
+      without offering a clear account of the reasoning behind them. That opacity is a
+      serious problem in domains that demand transparency and accountability —
+      healthcare, law, finance — and it is compounded for Vietnamese, a language with
+      its own morphological and syntactic quirks that make model behavior harder to
+      interpret than for more commonly studied languages.
+    </p>
+    <p>
+      This project applies explainability (XAI) methods to a Vietnamese text
+      classification model: visualizing Attention weights to see which words the model
+      "looks at", and using LIME and SHAP to quantify how much each word contributes to
+      a prediction — in order to assess how trustworthy the model actually is, and to
+      discuss where today's explanation methods still fall short.
+    </p>
+
+    <h2>Setup</h2>
+    <table>
+      <thead><tr><th>Component</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Dataset</td><td>UIT-VSFC (Vietnamese Students' Feedback Corpus) — 16,000+ sentences labeled Positive / Negative / Neutral, from Vietnamese university students' feedback on teaching quality and facilities</td></tr>
+        <tr><td>Model</td><td><code>wonrax/phobert-base-vietnamese-sentiment</code> — a PhoBERT model already fine-tuned on Vietnamese e-commerce review sentiment, evaluated here out-of-domain on student feedback text</td></tr>
+        <tr><td>Sample selection</td><td>6 representative sentences from the UIT-VSFC test set (2 Positive, 2 Negative, 2 Neutral) — the goal was comparing XAI methods, not optimizing classifier accuracy</td></tr>
+        <tr><td>Preprocessing</td><td>Vietnamese word segmentation via <code>underthesea.word_tokenize</code> (multi-syllable words joined with underscores, e.g. "nhiệt_tình"), then tokenized with max_length=128</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Four Explainability Methods Compared</h2>
+    <table>
+      <thead><tr><th>Method</th><th>Basis</th><th>Model-agnostic?</th><th>Shows direction (+/-)?</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td>LIME</td><td>Local linear approximation</td><td>Yes</td><td>Yes</td><td>Medium (500 perturbed samples per sentence)</td></tr>
+        <tr><td>SHAP</td><td>Shapley values (game theory)</td><td>Yes</td><td>Yes</td><td>High (combinatorial subsets)</td></tr>
+        <tr><td>Attention Visualization</td><td>Transformer self-attention weights</td><td>No</td><td>No</td><td>Low (single forward pass)</td></tr>
+        <tr><td>Saliency Map</td><td>Gradient w.r.t. input embeddings</td><td>No</td><td>No</td><td>Low (one backward pass)</td></tr>
+      </tbody>
+    </table>
+    <p>
+      LIME and SHAP have a real advantage: they show <em>which direction</em> a word
+      pushes the prediction (supporting or opposing the predicted label), while
+      Attention and Saliency Map only show relative importance, without saying whether
+      a token pushed the prediction toward or away from the predicted class.
+    </p>
+
+    <h2>Key Findings</h2>
+    <h3>Strong agreement on negation</h3>
+    <p>
+      On the two Negative-labeled samples, all four methods converged on the same
+      signal. For "Giảng viên không bao giờ trả lời email của tôi" ("The instructor
+      never replies to my emails"), predicted Negative with 99.8% confidence, LIME
+      assigned the word "không" ("not/never") a weight of <strong>+0.3399</strong> — the
+      strongest token in the sentence — and SHAP assigned "không" a value of
+      <strong>0.9823</strong> in the other Negative sample, far ahead of every other
+      token. This consistency across four independent methods is a strong positive
+      signal: the model has genuinely learned the role of negation in Vietnamese, not
+      just a spurious correlation.
+    </p>
+    <h3>A puzzling function word</h3>
+    <p>
+      Not every signal was easy to interpret. SHAP assigned the function word "của"
+      ("of") a surprisingly high value of <strong>0.4222</strong> in one Negative
+      sample — plausibly tied to the personalizing role of "của tôi" ("of mine") in a
+      complaint, but still a hard-to-interpret signal on its own, and a reminder that
+      explanation methods don't always point to features a human would consider
+      obviously meaningful.
+    </p>
+    <h3>Divergence on Positive and Neutral samples</h3>
+    <p>
+      Agreement was noticeably weaker outside the Negative group. On Positive samples,
+      the four methods highlighted different top tokens, and explicitly positive words
+      like "rõ_ràng" ("clear") or "chuyên_nghiệp" ("professional") didn't always rank in
+      the top 3 — suggesting the model leans more on broader contextual patterns (e.g.
+      education-domain entities like "Thầy", "học_viên") than on individual sentiment
+      words. On one Neutral sample, the model's confidence swung noticeably toward
+      Positive in the presence of words like "hiện đại" ("modern") or "công_nghệ"
+      ("technology") — Saliency Map and Attention even flipped to predicting Positive on
+      that sentence, exposing a genuinely fuzzy Neutral/Positive boundary in the
+      education domain, and a plausible side-effect of the model being originally
+      fine-tuned on e-commerce reviews rather than student feedback.
+    </p>
+
+    <h2>Trustworthiness by Label Group</h2>
+    <table>
+      <thead><tr><th>Group</th><th>Trust level</th><th>Basis</th></tr></thead>
+      <tbody>
+        <tr><td>Negative</td><td>High</td><td>All four methods agree on negation cues ("không", "bao_giờ") as the dominant signal</td></tr>
+        <tr><td>Positive</td><td>Medium</td><td>High-confidence correct predictions, but explanations point more to domain entities than to explicit positive sentiment words</td></tr>
+        <tr><td>Neutral</td><td>Low</td><td>Confidence and even predicted label became unstable in the presence of technology-related vocabulary</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Illustrative Results</h2>
+    <figure>
+      <img src="../assets/img/xai-attention-heatmap.png" alt="Attention heatmap from the [CLS]/<s> token to each token, across all 6 samples">
+      <figcaption>Attention from the <code>&lt;s&gt;</code> token to each input token (layer 12, averaged
+      over 12 heads) across all 6 samples — negation words ("không", "bao_giờ") clearly dominate
+      the two Negative samples.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/img/xai-heads-comparison.png" alt="Comparison of all 12 attention heads for the negation sample">
+      <figcaption>All 12 attention heads (final layer) for the sentence "Giảng viên không bao giờ trả lời
+      email của tôi" — several heads independently converge on the negation cluster ("không", "bao_giờ"),
+      while others specialize in different patterns (e.g. diagonal/self-attention).</figcaption>
+    </figure>
+
+    <h2>Limitations</h2>
+    <ul>
+      <li>All four methods measure correlation, not causation — a high SHAP value or saliency score doesn't prove a token actually caused the prediction, only that it's statistically associated with it.</li>
+      <li>These are local explanations on individual sentences; drawing conclusions about overall model trustworthiness from just 6 samples is illustrative, not statistically conclusive.</li>
+      <li>Methods can disagree on the same sentence with no clear framework for deciding whether that disagreement signals an untrustworthy model or just different (equally valid) perspectives.</li>
+      <li>SHAP's masking-based approximation and Saliency Map's gradient-saturation issue (near-certain predictions produce tiny gradients) can each distort which tokens appear important.</li>
+      <li>Vietnamese-specific challenges: word segmentation can split meaningful compounds (e.g. "kiến trúc" → "kiến" + "trúc"), multi-word negation ("không bao giờ") gets its weight split across tokens instead of treated as one unit, and there is no Vietnamese equivalent of an English-style rationale benchmark (like ERASER) to evaluate explanation quality quantitatively.</li>
+    </ul>
+
+    <h2>Tools</h2>
+    <div class="tag-row">
+      <span class="tag">Python</span>
+      <span class="tag">PyTorch</span>
+      <span class="tag">Hugging Face Transformers</span>
+      <span class="tag">underthesea</span>
+      <span class="tag">BertViz</span>
+      <span class="tag">SHAP / LIME</span>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="social-links">
+      <a href="mailto:hangminh102001@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/nguyenminhhang20/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="https://github.com/hangminh102001-crypto" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.333-1.755-1.333-1.755-1.089-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.775.42-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </a>
+    </div>
+    <p>&copy; 2026 Hang T. M. Nguyen.</p>
+  </footer>
+</div>
+</body>
+</html>
