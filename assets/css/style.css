@@ -359,7 +359,7 @@ footer.site-footer {
 
 .focus-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.1rem;
   margin: 1.5rem 0;
 }
@@ -396,4 +396,5 @@ code {
   header.site-header { margin: 0 -1.1rem 2.25rem; padding: 1rem 1.1rem; }
   h1 { font-size: 1.85rem; }
   nav.site-nav a { margin-left: 1rem; font-size: 0.88rem; }
+  .focus-grid { grid-template-columns: 1fr; }
 }
