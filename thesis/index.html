@@ -219,8 +219,8 @@
       <li>Anomaly ≠ fraud — the pipeline's output is a flag for the auditor to review, not a final conclusion.</li>
       <li>The AP score uses only 4 categorical attributes — some other anomaly types (e.g. time-based) may be missed.</li>
       <li>Posting lag: year-end entries often show high lag even when legitimate (post-audit adjustments) — this case needs to be excluded from the red-flag rule.</li>
-      <li>The pipeline has so far been validated on a 4,218-entry subset (Jul–Nov 2022); extending it to the full 9,804-line, 12-month dataset is in progress and may shift the results shown here.</li>
-      <li>Scope limited to a single FDI enterprise — generalizability still needs to be verified.</li>
+      <li>The weighted-consensus step is not part of the original Schreyer framework — it follows Bakumenko &amp; Elragal (2022).</li>
+      <li>4,218 rows is a small sample; AUC may fluctuate more than it would on a larger dataset.</li>
     </ul>
 
     <h2>Tools</h2>
