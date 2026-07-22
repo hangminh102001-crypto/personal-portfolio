@@ -169,6 +169,19 @@ p, li { color: var(--text); }
   margin: 1.25rem 0 2rem;
 }
 
+.skill-group { margin-bottom: 1.1rem; }
+
+.skill-group h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.skill-group .tag-row { margin: 0 0 1.1rem; }
+
 .tag {
   background: var(--accent-soft);
   color: var(--accent);
