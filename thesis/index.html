@@ -50,7 +50,7 @@
     </div>
 
     <div class="note">
-      The data used in this research (9,804 general-ledger lines, January–December 2022, from
+      The data used in this research (4,218 general-ledger lines, July–November 2022, from
       an FDI enterprise in the trading sector in Vietnam) was anonymized before being handed
       over for academic purposes. The company's name, tax code, and specific voucher IDs are
       not disclosed on this page; the figures shown here are aggregate statistics only.
@@ -91,18 +91,13 @@
     <h2>Research Object &amp; Scope</h2>
     <p>
       The research object is accounting entries recorded in the General Ledger of an FDI
-      enterprise operating under Vietnamese accounting law. The scope covers the full 2022
-      fiscal year (January–December), comprising 9,804 individual debit/credit ledger lines
-      that were anonymized in strict compliance with data protection requirements. The data
-      reflects the characteristics of an import-export trading company: multi-currency
-      transactions, multiple vendors, and entry structures involving FX revaluation, vendor
-      payments, and inventory postings.
-    </p>
-    <p>
-      An initial subset covering July–November 2022 (4,218 paired journal entries) — the only
-      part of the dataset with both a voucher date and a separate posting date recorded — was
-      used to validate the anomaly-detection pipeline described below. Extending the pipeline
-      to the full 12-month dataset is in progress.
+      enterprise operating under Vietnamese accounting law. The scope covers July–November 2022,
+      comprising 4,218 paired debit/credit journal entries that were anonymized in strict
+      compliance with data protection requirements — the only part of the available data with
+      both a voucher date and a separate posting date recorded, which the pipeline relies on for
+      its posting-lag feature. The data reflects the characteristics of an import-export trading
+      company: multi-currency transactions, multiple vendors, and entry structures involving FX
+      revaluation, vendor payments, and inventory postings.
     </p>
 
     <h2>Applicable Legal Framework</h2>
@@ -120,21 +115,21 @@
     <table>
       <thead><tr><th>Metric</th><th>Value</th></tr></thead>
       <tbody>
-        <tr><td>Total ledger lines</td><td>9,804 (Jan–Dec 2022)</td></tr>
-        <tr><td>Unique accounts</td><td>48</td></tr>
-        <tr><td>Unique level-1 account groups</td><td>25</td></tr>
-        <tr><td>Unique counterparties</td><td>137</td></tr>
-        <tr><td>Debit / Credit lines</td><td>4,728 / 4,728</td></tr>
-        <tr><td>Lines with foreign currency</td><td>578</td></tr>
-        <tr><td>Largest transaction amount</td><td>~VND 32 billion</td></tr>
-        <tr><td>Skewness / Kurtosis (amount distribution)</td><td>6.94 / 53.7 (heavy-tailed)</td></tr>
+        <tr><td>Total ledger lines</td><td>4,218 (Jul–Nov 2022)</td></tr>
+        <tr><td>Unique accounts</td><td>83</td></tr>
+        <tr><td>Unique level-1 account groups</td><td>7</td></tr>
+        <tr><td>Unique counterparties</td><td>106</td></tr>
+        <tr><td>Debit / Credit accounts</td><td>71 / 48</td></tr>
+        <tr><td>Lines with foreign currency</td><td>63 (USD)</td></tr>
+        <tr><td>Largest transaction amount</td><td>~VND 63.1 billion</td></tr>
+        <tr><td>Skewness / Kurtosis (amount distribution)</td><td>17.34 / 342.1 (heavy-tailed)</td></tr>
       </tbody>
     </table>
 
     <h2>Experimental Pipeline (per the <code>fraud_detection_v3_1</code> notebook)</h2>
     <p>
-      The results below were computed on the Jul–Nov 2022 validation subset (4,218 paired
-      entries) — the currently completed run. The latest pipeline version trains four
+      The results below were computed on the full 4,218-entry dataset (Jul–Nov 2022) — the
+      currently completed run. The latest pipeline version trains four
       anomaly-detection models in parallel and combines their outputs through a weighted
       consensus, rather than processing entries sequentially through separate layers. The
       underlying theory still follows Schreyer et al. (2017, arXiv:1709.05254) for the AP/RE/AS
@@ -200,7 +195,7 @@
       detection framework combining Isolation Forest, LOF, KMeans, Autoencoder, and SHAP on real
       GL data; (2) fully integrating Vietnamese legal requirements (Circular 200/2014 Article 10,
       VSA 240/530, ISA 530) into the classification logic and output thresholds; (3) successfully
-      classifying the 4,218-entry validation subset into anomaly groups: NORMAL 2,307 (54.7%),
+      classifying the full 4,218-entry dataset into anomaly groups: NORMAL 2,307 (54.7%),
       GLOBAL 1,024 (24.3%), LOCAL 887 (21.0%); (4) proposing a 5-step CAATs process that can be adopted
       immediately under Decree 05/2019/ND-CP.
     </p>
